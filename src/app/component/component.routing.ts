@@ -1,13 +1,10 @@
 import { Routes } from '@angular/router';
-import { NgbdpaginationBasicComponent } from './pagination/pagination.component';
-import { RiskManagementComponent } from './RiskManagement/RiskManagement.component';
-
-import { NgbdDropdownBasicComponent } from './DonationManagement/donation.component';
-import { NgbdnavBasicComponent } from './nav/nav.component';
-import { BadgeComponent } from './Loan Management/LoanManagement.component';
-import { NgbdButtonsComponent } from './ContractManagement/ContractManagement.component';
-import { CardsComponent } from './ComplaintManagement/complaint.component';
-import { TableComponent } from './User/User.component';
+import { RiskManagementComponent } from './Client/RiskManagement/RiskManagement.component';
+import { CardsComponent } from './Client/ClaimManagement/complaint.component';
+import { NgbdDropdownBasicComponent } from './Client/DonationManagement/donation.component';
+import { BadgeComponent } from './Client/Loan Management/LoanManagement.component';
+import { NgbdButtonsComponent } from './Client/ContractManagement/ContractManagement.component';
+import { TableComponent } from './Client/User/User.component';
 
 
 export const ComponentsRoutes: Routes = [
@@ -18,14 +15,8 @@ export const ComponentsRoutes: Routes = [
 				path: 'table',
 				component: TableComponent
 			},
-			{
-				path: 'card',
-				component: CardsComponent
-			},
-			{
-				path: 'pagination',
-				component: NgbdpaginationBasicComponent
-			},
+			
+			
 			{
 				path: 'badges',
 				component: BadgeComponent
@@ -38,10 +29,9 @@ export const ComponentsRoutes: Routes = [
 				path: 'dropdown',
 				component: NgbdDropdownBasicComponent
 			},
-			{
-				path: 'nav',
-				component: NgbdnavBasicComponent
-			},
+			
+			{ path: 'card',
+			 component: CardsComponent },
 			{
 				path: 'buttons',
 				component: NgbdButtonsComponent

@@ -1,15 +1,17 @@
 import { RouteInfo } from './sidebar.metadata';
 
 export const ROUTES: RouteInfo[] = [
- 
+  
   {
-    path: '/dashboard',
-    title: 'Dashboard',
-    icon: 'bi bi-speedometer2',
+    path: '/component/table',
+    title: 'User',
+    icon: 'bi bi-person-circle',
     class: '',
     extralink: false,
     submenu: []
   },
+ 
+ 
   {
     path: '/component/alert',
     title: 'Risk Management',
@@ -21,7 +23,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/component/badges',
     title: 'Loan Management',
-    icon: 'bi bi-patch-check',
+    icon: 'bi bi-cash-coin',
     class: '',
     extralink: false,
     submenu: []
@@ -29,15 +31,15 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/component/buttons',
     title: 'Contract Management',
-    icon: 'bi bi-hdd-stack',
+    icon: 'bi bi-journal-text',
     class: '',
     extralink: false,
     submenu: []
   },
   {
     path: '/component/card',
-    title: 'Complaint Management',
-    icon: 'bi bi-card-text',
+    title: 'Claim Management',
+    icon: 'bi bi-file-earmark-check',
     class: '',
     extralink: false,
     submenu: []
@@ -45,41 +47,12 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/component/dropdown',
     title: 'Donation Management',
-    icon: 'bi bi-menu-app',
+    icon: 'bi bi-gift',
     class: '',
     extralink: false,
     submenu: []
   },
-  {
-    path: '/component/pagination',
-    title: 'Pagination',
-    icon: 'bi bi-dice-1',
-    class: '',
-    extralink: false,
-    submenu: []
-  },
-  {
-    path: '/component/nav',
-    title: 'Nav',
-    icon: 'bi bi-pause-btn',
-    class: '',
-    extralink: false,
-    submenu: []
-  },
-  {
-    path: '/component/table',
-    title: 'User',
-    icon: 'bi bi-layout-split',
-    class: '',
-    extralink: false,
-    submenu: []
-  },
-  {
-    path: '/about',
-    title: 'About',
-    icon: 'bi bi-people',
-    class: '',
-    extralink: false,
-    submenu: []
-  }
+
+
+ 
 ];
