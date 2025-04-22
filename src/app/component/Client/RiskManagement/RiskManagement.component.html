@@ -1,24 +1,6 @@
 <div class="row">
   <div class="col-lg-12">
     <!-- ==================================-->
-    <!-- ========== Basic Alert ========== -->
-    <!-- ==================================-->
-    <div class="card w-100">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Basic Alert</h4>
-      </div>
-      <div class="card-body border-top">
-        <p *ngFor="let alert of alerts">
-          <ngb-alert [type]="alert.type" [dismissible]="false" class="customize-alert fs-4">
-            {{ alert.type }} - {{ alert.message }}
-          </ngb-alert>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-12">
-    <!-- ==================================-->
     <!-- ======== Outline Alert ========= -->
     <!-- ==================================-->
     <div class="card">
@@ -26,6 +8,16 @@
         <h4 class="card-title mb-0">Outline Alert</h4>
       </div>
       <div class="card-body border-top">
+        <form>
+          <div class="mb-3">
+            <label for="fileInput" class="form-label">Cliquez pour sélectionner un fichier</label>
+            <input class="form-control" type="file" id="fileInput" accept="application/pdf, .doc, .docx, .jpg, .png, .jpeg" />
+          </div>
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+            <small class="text-muted">Formats autorisés : PDF, DOCX, JPG, PNG</small>
+          </div>
+        </form>
         <ngb-alert class="
             bg-transparent
             border-primary border
