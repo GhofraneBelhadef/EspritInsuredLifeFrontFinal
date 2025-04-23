@@ -1,0 +1,60 @@
+<div *ngIf="user" class="profile-container">
+    <div class="profile-card">
+  
+      <!-- Photo de profil -->
+      <img 
+        *ngIf="user.photoProfil"
+        [src]="'data:image/png;base64,' + user.photoProfil" 
+        alt="Photo de profil" 
+        class="profile-img" />
+      <img 
+        *ngIf="!user.photoProfil"
+        src="assets/images/default-avatar.png" 
+        alt="Photo de profil par défaut"
+        class="profile-img" />
+  
+      <!-- 📸 Input pour changer la photo -->
+      <div class="mt-2 text-center">
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+        <button class="btn btn-primary btn-sm mt-2" (click)="uploadProfilePhoto()" [disabled]="!selectedFile">
+          Upload
+        </button>
+      </div>
+  
+      <!-- Nom d'utilisateur -->
+      <p class="profile-info">
+        <strong>Username :</strong> {{ user.username }}
+        <button class="btn btn-sm btn-link" (click)="editField('username')">✏️</button>
+      </p>
+      <div *ngIf="editMode === 'username'">
+        <input [(ngModel)]="updatedUser.username" class="form-control" />
+        <button class="btn btn-primary btn-sm mt-1" (click)="saveUpdate()">Save</button>
+      </div>
+  
+      <!-- Email -->
+      <p class="profile-info">
+        <strong>Email :</strong> {{ user.email }}
+        <button class="btn btn-sm btn-link" (click)="editField('email')">✏️</button>
+      </p>
+      <div *ngIf="editMode === 'email'">
+        <input [(ngModel)]="updatedUser.email" class="form-control" />
+        <button class="btn btn-primary btn-sm mt-1" (click)="saveUpdate()">Save</button>
+      </div>
+  
+      <!-- Téléphone -->
+      <p class="profile-info">
+        <strong>Téléphone :</strong> {{ user.telephone }}
+        <button class="btn btn-sm btn-link" (click)="editField('telephone')">✏️</button>
+      </p>
+      <div *ngIf="editMode === 'telephone'">
+        <input [(ngModel)]="updatedUser.telephone" class="form-control" />
+        <button class="btn btn-primary btn-sm mt-1" (click)="saveUpdate()">Save</button>
+      </div>
+  
+      <!-- Supprimer compte -->
+      <button class="btn btn-danger mt-3" (click)="deleteAccount()">
+        Delete Account
+      </button>
+    </div>
+  </div>
+  

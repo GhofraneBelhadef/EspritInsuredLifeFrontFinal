@@ -1,0 +1,225 @@
+/* Reset & base style */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f8fafc; /* Fond clair comme le dashboard */
+  }
+  
+  /* Container */
+  .container {
+    width: 100%;
+    max-width: 420px;
+    padding: 2rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Titre */
+  h2 {
+    font-size: 1.8rem;
+    color: #043927; /* Vert foncé comme dans le logo */
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Champs */
+  .input-box {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+  
+  .input-box input {
+    width: 100%;
+    height: 50px;
+    padding: 0 20px;
+    border-radius: 10px;
+    border: 1.5px solid #cbd5e1;
+    background: #f1f5f9;
+    font-size: 1rem;
+    transition: 0.3s;
+  }
+  
+  .input-box input:focus {
+    border-color: #16a34a;
+    background: #fff;
+    outline: none;
+  }
+  
+  .input-box label {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    font-size: 0.9rem;
+    pointer-events: none;
+    transition: 0.2s ease-in-out;
+  }
+  
+  .input-box input:focus ~ label,
+  .input-box input:valid ~ label {
+    top: -8px;
+    background: white;
+    padding: 0 5px;
+    font-size: 0.75rem;
+    color: #16a34a;
+  }
+  
+  /* Eye icon */
+  #eye-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  
+  /* Mot de passe oublié */
+  .forgot-pass {
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 20px;
+  }
+  .forgot-pass a {
+    font-size: 0.9rem;
+    color: #10b981;
+    text-decoration: none;
+  }
+  .forgot-pass a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Bouton principal */
+  .btn {
+    width: 100%;
+    height: 48px;
+    border: none;
+    border-radius: 10px;
+    background: #10b981;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .btn:hover {
+    background: #059669;
+  }
+  
+  /* Boutons Google / QR Code */
+  .google-login {
+    margin-top: 1rem;
+  }
+  
+  .google-btn, .qr-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 45px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .google-btn {
+    background: #ffffff;
+    color: #1e293b;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .google-btn:hover {
+    background: #f1f5f9;
+  }
+  
+  .qr-btn {
+    background: #10b981;
+    color: #083344;
+    margin-top: 10px;
+    color: white;
+  }
+  
+  .qr-btn:hover {
+    background: #059669;
+  }
+  
+  .google-btn img, .qr-btn img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Lien d'inscription */
+  .signup-link {
+    margin-top: 1rem;
+    text-align: center;
+  }
+  
+  .signup-link a {
+    color: #10b981;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .signup-link a:hover {
+    text-decoration: underline;
+  }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e6f4ea, #d1fae5); /* Teinte verte douce */
+  }  
+  
+  
+  /* Espacement + tailles améliorées */
+  .slogan-container {
+    text-align: center;
+    margin-bottom: 50px; /* <-- Plus d’espace ici */
+    color: #065f46;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .slogan-container h1 {
+    font-size: 3em; /* <-- Plus grand */
+    font-weight: bold;
+    margin: 0;
+    margin-right: 70px;
+  }
+  
+  .slogan-container p {
+    font-size: 2.3em; /* <-- Plus grand aussi */
+    color: #047857;
+    margin-top: 10px;
+    margin-right: 50px
+    
+  }
+  .logo {
+    width: 200px;
+    background-color: transparent;
+    mix-blend-mode: multiply;
+    margin-bottom: 15px;
+    margin-top: 0px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  

@@ -1,0 +1,48 @@
+<nav style="background-color: #106861; color: white; padding: 0.5rem 1rem; border-bottom: 1px solid #145c36;" class="navbar navbar-expand-md">
+  <!-- ============================================================== -->
+  <!-- toggle and nav items -->
+  <!-- ============================================================== -->
+  <ul class="navbar-nav float-start me-auto">
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" href="/dashboard" style="color: white;"> Business </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" href="/about"style="color: white;" > Individuals </a>
+    </li>
+   
+  </ul>
+  <!-- ============================================================== -->
+  <!-- Right side toggle and nav items -->
+  <!-- ============================================================== -->
+  <ul class="navbar-nav float-end">
+    <!-- ============================================================== -->
+    <!-- User profile and search -->
+    <!-- ============================================================== -->
+    <li class="nav-item" ngbDropdown placement="bottom-end">
+      <a
+        ngbDropdownToggle
+        class="nav-link waves-effect waves-dark pro-pic"
+        href="javascript:void(0)"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        
+        <span class="ms-2" style="color: white;">Login</span>
+      </a>
+      <div class="dropdown-menu-right" ngbDropdownMenu>
+        <a class="dropdown-item" (click)="goToProfile()"> My Profile</a>
+        <a class="dropdown-item" href="javascript:void(0)"> My Balance</a>
+        <a class="dropdown-item" href="javascript:void(0)"> Inbox</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="javascript:void(0)"> Account Setting</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="javascript:void(0)"> Logout</a>
+      </div>
+    </li>
+    <!-- ============================================================== -->
+    <!-- User profile and search -->
+    <!-- ============================================================== -->
+  </ul>
+  </nav>
+  

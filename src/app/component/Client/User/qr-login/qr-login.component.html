@@ -1,0 +1,23 @@
+<div class="qr-container">
+    <h2>Connexion par QR Code</h2>
+  
+    <div class="form-group">
+      <label for="username">Type your username :</label>
+      <input type="text" [(ngModel)]="username" id="username" />
+      <button (click)="generateQr()">Générer le QR Code</button>
+    </div>
+  
+    <div *ngIf="qrCodeData" class="qr-section">
+      <h3>Scannez ce QR Code</h3>
+      <img [src]="qrCodeData" alt="QR Code de connexion" />
+    </div>
+  
+    <div *ngIf="qrCodeData" class="token-input">
+      <label for="token">Coller le token après le scan :</label>
+      <input type="text" [(ngModel)]="token" id="token" />
+      <button (click)="validateToken()">Valider</button>
+    </div>
+  
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  </div>
+  

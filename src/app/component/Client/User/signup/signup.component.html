@@ -1,0 +1,29 @@
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <input type="text" formControlName="username" placeholder="Nom d'utilisateur" />
+    <input type="email" formControlName="email" placeholder="Email" />
+    <input type="password" formControlName="password" placeholder="Mot de passe" />
+    <input type="text" formControlName="telephone" placeholder="Téléphone" />
+    <input type="text" formControlName="nom" placeholder="nom" />
+    <input type="text" formControlName="prenom" placeholder="prenom" />
+    
+    <input type="date" formControlName="dateNaissance" placeholder="Date de naissance" />
+    
+    
+  
+   <!-- Champs de fichier invisibles sauf photo de profil -->
+<input type="file" id="cin" (change)="onFileChange($event, 'cin')" style="display: none;" />
+<input type="file" id="justificatifDomicile" (change)="onFileChange($event, 'justificatifDomicile')" style="display: none;" />
+<input type="file" id="rib" (change)="onFileChange($event, 'rib')" style="display: none;" />
+<input type="file" id="bulletinSalaire" (change)="onFileChange($event, 'bulletinSalaire')" style="display: none;" />
+<input type="file" id="declarationSante" (change)="onFileChange($event, 'declarationSante')" style="display: none;" />
+<input type="file" id="designationBeneficiaire" (change)="onFileChange($event, 'designationBeneficiaire')" style="display: none;" />
+
+<!-- Photo de profil : visible -->
+<label for="photoProfil">Photo de profil :</label>
+<input type="file" id="photoProfil" (change)="onFileChange($event, 'photoProfil')" />
+<img *ngIf="photoPreviewUrl" [src]="photoPreviewUrl" alt="Aperçu photo" width="100" style="margin-top: 10px; border-radius: 10px;" />
+
+  
+    <button type="submit">Submit</button>
+  </form>
+  

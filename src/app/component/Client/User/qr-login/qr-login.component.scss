@@ -1,0 +1,89 @@
+.qr-container {
+    max-width: 450px;
+    margin: 40px auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    color: #0f172a;
+  }
+  
+  .qr-container h2 {
+    font-size: 1.8rem;
+    color: #0f766e;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group,
+  .token-input {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .form-group label,
+  .token-input label {
+    text-align: left;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #334155;
+  }
+  
+  input[type="text"] {
+    padding: 10px 15px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+  }
+  
+  input[type="text"]:focus {
+    border-color: #0f766e;
+    outline: none;
+  }
+  
+  button {
+    margin-top: 12px;
+    padding: 10px;
+    background-color: #14b8a6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #0d9488;
+  }
+  
+  .qr-section {
+    margin-top: 2rem;
+  }
+  
+  .qr-section h3 {
+    font-size: 1.2rem;
+    color: #047857;
+    margin-bottom: 1rem;
+  }
+  
+  .qr-section img {
+    max-width: 200px;
+    height: auto;
+    border: 4px solid #ccfbf1;
+    border-radius: 16px;
+    padding: 10px;
+    background-color: #f0fdfa;
+  }
+  
+  .error {
+    color: #dc2626;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+  
