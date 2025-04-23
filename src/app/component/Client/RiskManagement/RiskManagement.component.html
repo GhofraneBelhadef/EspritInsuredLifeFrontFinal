@@ -1,11 +1,9 @@
 <div class="row">
+  <!-- Section Téléversement de fichier -->
   <div class="col-lg-12">
-    <!-- ==================================-->
-    <!-- ======== Outline Alert ========= -->
-    <!-- ==================================-->
     <div class="card">
       <div class="p-3">
-        <h4 class="card-title mb-0">Outline Alert</h4>
+        <h4 class="card-title mb-0">Téléversement de fichier</h4>
       </div>
       <div class="card-body border-top">
         <form>
@@ -18,101 +16,336 @@
             <small class="text-muted">Formats autorisés : PDF, DOCX, JPG, PNG</small>
           </div>
         </form>
-        <ngb-alert class="
-            bg-transparent
-            border-primary border
-            text-primary
-            d-flex
-            align-items-center
-            fs-5
-          ">
-
-          A simple primary light alert
-        </ngb-alert>
-        <ngb-alert class="
-            bg-transparent
-            border-secondary border
-            text-secondary
-            d-flex
-            align-items-center
-            fs-5
-          ">
-
-          A simple secondary light alert
-        </ngb-alert>
-        <ngb-alert class="
-            bg-transparent
-            border-success border
-            text-success
-            d-flex
-            align-items-center
-            fs-5
-          ">
-
-          A simple success light alert
-        </ngb-alert>
-        <ngb-alert class="
-            bg-transparent
-            border-danger border
-            text-danger
-            d-flex
-            align-items-center
-            fs-5
-          ">
-
-          A simple danger light alert
-        </ngb-alert>
-        <ngb-alert class="
-            bg-transparent
-            border-warning border
-            text-warning
-            d-flex
-            align-items-center
-            fs-5
-          ">
-
-          A simple warning light alert
-        </ngb-alert>
-        <ngb-alert class="
-            bg-transparent
-            border-info border
-            text-info
-            d-flex
-            align-items-center
-            fs-5
-          ">
-
-          A simple info light alert
-        </ngb-alert>
       </div>
     </div>
   </div>
 
-  <div class="col-lg-12">
-    <!-- ==================================-->
-    <!-- ======= Custom Alert ===== -->
-    <!-- ==================================-->
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Custom Alert</h4>
+  <!-- Section Risk Score -->
+  <div class="col-lg-12 mt-4">
+    <div class="card shadow-lg">
+      <div class="card-header bg-gradient-danger text-white">
+        <h4 class="mb-0">🎯 Analyse de Risque</h4>
       </div>
-      <div class="card-body border-top">
-        <ngb-alert type="custom" [dismissible]="false"><strong>Whoa!</strong> This is a custom alert.</ngb-alert>
+      <div class="card-body">
+        <div class="row align-items-center">
+          <!-- Gauge Chart -->
+          <div class="col-md-6 text-center">
+            <div class="risk-gauge mx-auto" style="width: 250px; height: 250px;">
+              <canvas id="riskGauge"></canvas>
+              <div class="gauge-label">
+                <h2 class="mb-0 fw-bold" id="riskScoreValue">72</h2>
+                <small class="text-muted">RISK SCORE</small>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Détails et Interprétation -->
+          <div class="col-md-6">
+            <div class="risk-category mb-4">
+              <h5 class="d-flex justify-content-between">
+                <span>Niveau de Risque:</span>
+                <span class="badge bg-danger" id="riskLevel">Élevé</span>
+              </h5>
+              <div class="progress" style="height: 10px;">
+                <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: 72%"></div>
+              </div>
+            </div>
+            
+            <div class="risk-details">
+              <h5><i class="fas fa-exclamation-triangle me-2"></i>Recommandations</h5>
+              <ul class="list-unstyled">
+                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Revérifier les documents joints</li>
+                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Demander une vérification manuelle</li>
+                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Contacter le client pour confirmation</li>
+              </ul>
+            </div>
+            
+            <button class="btn btn-outline-danger mt-3">
+              <i class="fas fa-redo me-2"></i>Recalculer le Score
+            </button>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Global Configuration of Alert</h4>
+  <!-- Section Timeline Évolution -->
+  <div class="col-lg-12 mt-4">
+    <div class="card shadow-sm">
+      <div class="card-header bg-gradient-info text-white">
+        <h4 class="mb-0">📈 Historique des Scores de Risque</h4>
       </div>
-      <div class="card-body border-top">
-        <p>
-          <ngb-alert type="light-secondary" class="text-secondary font-medium fs-5">
-            This alert's type is success and it's not dismissible because the
-            config has been customized
-          </ngb-alert>
-        </p>
+      <div class="card-body">
+        <div class="timeline">
+          <!-- Item 1 -->
+          <div class="timeline-item">
+            <div class="timeline-badge trend-up">↑</div>
+            <div class="timeline-content">
+              <h6 class="mb-1">15 Juin 2023</h6>
+              <div class="d-flex align-items-center">
+                <span class="risk-score-badge" style="background-color: #28a745;">42</span>
+                <span class="ms-2 text-success">+8% vs précédent</span>
+              </div>
+              <p class="text-muted mt-1 mb-0">Première analyse après vérification initiale</p>
+            </div>
+          </div>
+          
+          <!-- Item 2 -->
+          <div class="timeline-item">
+            <div class="timeline-badge trend-down">↓</div>
+            <div class="timeline-content">
+              <h6 class="mb-1">22 Juin 2023</h6>
+              <div class="d-flex align-items-center">
+                <span class="risk-score-badge" style="background-color: #ffc107;">58</span>
+                <span class="ms-2 text-danger">+16%</span>
+              </div>
+              <p class="text-muted mt-1 mb-0">Détection d'anomalies dans les documents</p>
+            </div>
+          </div>
+          
+          <!-- Item 3 -->
+          <div class="timeline-item">
+            <div class="timeline-badge trend-up">↑</div>
+            <div class="timeline-content">
+              <h6 class="mb-1">30 Juin 2023</h6>
+              <div class="d-flex align-items-center">
+                <span class="risk-score-badge" style="background-color: #fd7e14;">67</span>
+                <span class="ms-2 text-danger">+9%</span>
+              </div>
+              <p class="text-muted mt-1 mb-0">Nouveaux documents analysés</p>
+            </div>
+          </div>
+          
+          <!-- Item 4 (Current) -->
+          <div class="timeline-item current">
+            <div class="timeline-badge trend-up">↑</div>
+            <div class="timeline-content">
+              <h6 class="mb-1">5 Juillet 2023</h6>
+              <div class="d-flex align-items-center">
+                <span class="risk-score-badge" style="background-color: #dc3545;">72</span>
+                <span class="ms-2 text-danger">+5%</span>
+              </div>
+              <p class="text-muted mt-1 mb-0">Analyse finale - Risque élevé détecté</p>
+              <span class="badge bg-primary mt-2">Dernière mise à jour</span>
+            </div>
+          </div>
+        </div>
+        
+        <button class="btn btn-outline-info mt-3">
+          <i class="fas fa-history me-2"></i>Voir l'historique complet
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nouvelle Section Feedback Bubble -->
+  <div class="col-lg-12 mt-4">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body text-center p-4 position-relative overflow-hidden">
+        <!-- Effet de confetti (éléments absolus) -->
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        
+        <!-- Contenu principal -->
+        <div class="position-relative z-index-1">
+          <div class="feedback-bubble bg-gradient-success text-white p-4 rounded-circle d-inline-flex flex-column align-items-center justify-content-center" style="width: 180px; height: 180px;">
+            <i class="fas fa-party-horn fa-3x mb-3"></i>
+            <h5 class="mb-0">Bravo!</h5>
+          </div>
+          <div class="mt-4">
+            <h3 class="text-success">Votre score s'est amélioré!</h3>
+            <p class="lead">72 → 58 <span class="text-success">(-14 points)</span></p>
+            <button class="btn btn-success btn-lg mt-2">
+              <i class="fas fa-share me-2"></i>Partager ce résultat
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Script pour le gauge chart -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const ctx = document.getElementById('riskGauge').getContext('2d');
+  const riskScore = 72; // Valeur dynamique à remplacer
+  
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      datasets: [{
+        data: [riskScore, 100-riskScore],
+        backgroundColor: [
+          getRiskColor(riskScore),
+          '#e9ecef'
+        ],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      circumference: 180,
+      rotation: -90,
+      cutout: '80%',
+      plugins: { legend: { display: false } },
+      tooltips: { enabled: false }
+    }
+  });
+
+  function getRiskColor(score) {
+    if (score > 75) return '#dc3545';
+    if (score > 50) return '#fd7e14';
+    if (score > 25) return '#ffc107';
+    return '#28a745';
+  }
+});
+</script>
+
+<style>
+/* Styles pour Risk Gauge */
+.risk-gauge {
+  position: relative;
+}
+.gauge-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  text-align: center;
+}
+.bg-gradient-danger {
+  background: linear-gradient(45deg, #ff4d4d, #dc3545);
+}
+.bg-gradient-info {
+  background: linear-gradient(45deg, #17a2b8, #1abc9c);
+}
+
+/* Styles pour la timeline */
+.timeline {
+  position: relative;
+  padding-left: 50px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #dee2e6;
+}
+.timeline-item {
+  position: relative;
+  padding-bottom: 25px;
+}
+.timeline-item.current {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.timeline-badge {
+  position: absolute;
+  left: -40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+.trend-up {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+.trend-down {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+.timeline-content {
+  padding-left: 15px;
+}
+.risk-score-badge {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  line-height: 40px;
+  font-weight: bold;
+}
+
+/* Styles pour la bulle de feedback */
+.feedback-bubble {
+  box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+  animation: pulse 2s infinite;
+}
+
+/* Animation de pulsation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Effet de confetti */
+.confetti {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  opacity: 0;
+  background-color: #f00;
+  animation: confetti 5s ease-in-out infinite;
+}
+
+.confetti:nth-child(1) {
+  background-color: #f00;
+  left: 10%;
+  top: -10%;
+  animation-delay: 0.5s;
+}
+.confetti:nth-child(2) {
+  background-color: #0f0;
+  left: 20%;
+  top: -5%;
+  animation-delay: 1s;
+}
+.confetti:nth-child(3) {
+  background-color: #00f;
+  left: 30%;
+  top: -8%;
+  animation-delay: 1.5s;
+}
+.confetti:nth-child(4) {
+  background-color: #ff0;
+  left: 70%;
+  top: -10%;
+  animation-delay: 0.8s;
+}
+.confetti:nth-child(5) {
+  background-color: #f0f;
+  left: 85%;
+  top: -5%;
+  animation-delay: 1.2s;
+}
+
+@keyframes confetti {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(500px) rotate(360deg); opacity: 0; }
+}
+
+.bg-gradient-success {
+  background: linear-gradient(45deg, #28a745, #20c997);
+}
+
+.z-index-1 {
+  z-index: 1;
+}
+</style>
