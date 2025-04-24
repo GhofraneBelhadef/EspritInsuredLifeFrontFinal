@@ -8,6 +8,8 @@ import { ForgotpasswordComponent } from './component/Client/User/forgotpassword/
 import { ResetpasswordComponent } from './component/Client/User/resetpassword/resetpassword.component';
 import { UserProfileComponent } from './component/Client/User/user-profile/user-profile.component';
 import { QrLoginComponent } from './component/Client/User/qr-login/qr-login.component';
+import { UserListComponent } from './component/Admin/User/user-list/user-list.component';
+
 
 export const Approutes: Routes = [
   {
@@ -21,6 +23,13 @@ export const Approutes: Routes = [
   },
   { path: 'signup', component: SignupComponent },
   { path: 'qr-login', component: QrLoginComponent },
+  {
+    path: 'dashboardadmin',
+    loadChildren: () =>
+      import('./dashboardadmin/dashboardadmin.module').then(m => m.DashboardadminModule)
+  },
+  
+
   
   {
     path: '',
@@ -30,6 +39,8 @@ export const Approutes: Routes = [
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
       },
+      
+      
       {
         path: 'about',
         loadChildren: () => import('./about/about.module').then(m => m.AboutModule)
@@ -41,7 +52,8 @@ export const Approutes: Routes = [
       {
         path: 'user-profile',
         component: UserProfileComponent
-      }
+      },
+      { path: 'admin/users', component: UserListComponent },
       
       
     ]

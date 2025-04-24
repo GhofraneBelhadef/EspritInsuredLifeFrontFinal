@@ -1,0 +1,57 @@
+<div class="container">
+    <h2>Clients and Admins List</h2>
+  
+    <!-- Tableau des utilisateurs -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Photo</th>
+          <th>Nom d'utilisateur</th>
+          <th>Email</th>
+          <th>Téléphone</th>
+          <th>Rôle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>
+            <img 
+        *ngIf="user.photoProfil"
+        [src]="'data:image/png;base64,' + user.photoProfil" width="50" height="50" style="border-radius: 50%;" alt="pdp" />
+        <img 
+        *ngIf="!user.photoProfil"
+        src="assets/images/avatar.jpg" width="50" height="50" style="border-radius: 50%;"
+        alt="Photo de profil par défaut"
+        class="profile-img" />
+          </td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.telephone }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <!-- Bouton affiché seulement si rôle = CLIENT -->
+            <button *ngIf="user.role === 'CLIENT'" class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Pagination avec flèches CSS -->
+    <div class="pagination">
+      <!-- Flèche Précédent -->
+      <button (click)="goToPreviousPage()" [disabled]="page === 0" class="btn btn-secondary arrow-btn">
+        <span class="arrow left"></span> <!-- Flèche gauche -->
+      </button>
+  
+      <!-- Affiche la page courante et le nombre total de pages -->
+      <span>Page {{ page + 1 }} sur {{ totalPages }}</span>
+  
+      <!-- Flèche Suivant -->
+      <button (click)="goToNextPage()" [disabled]="page === totalPages - 1" class="btn btn-secondary arrow-btn">
+        <span class="arrow right"></span> <!-- Flèche droite -->
+      </button>
+    </div>
+  </div>
+  

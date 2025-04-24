@@ -81,6 +81,24 @@ export class AuthService {
       }
     });
   }
+  getAllUsers(page: number, size: number): Observable<any> {
+    const token = this.getToken();  // Récupère le token depuis le localStorage
+    const headers = {
+      'Authorization': `Bearer ${token}`  // Ajoute le token dans les en-têtes
+    };
+  
+    return this.http.get<any>(`http://localhost:9090/api/users?page=${page}&size=${size}`, { headers });
+  }
+  deleteUser(id: number) {
+    const token = this.getToken(); // Récupère le token
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
+  
+    return this.http.delete('http://localhost:9090/api/users/' + id, { headers, responseType: 'text' });
+  }
+  
+  
 
 
   

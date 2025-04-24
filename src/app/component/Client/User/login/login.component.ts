@@ -33,7 +33,7 @@ export class LoginComponent {
           console.log('Rôle de l\'utilisateur :', role);
   
           if (role === 'ADMIN') {
-            this.router.navigate(['/dashboard']); // Redirection admin
+            this.router.navigate(['/dashboardadmin']); // Redirection admin
           } else {
             this.router.navigate(['/dashboard']); // Redirection autres rôles
           }
