@@ -1,0 +1,29 @@
+<h2>📄 Liste des contrats</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Type</th>
+      <th>Âge</th>
+      <th>Catégorie</th>
+      <th>Prix</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let contract of contracts">
+      <td>{{ contract.contract_id }}</td>
+      <td>{{ contract.insurrance_type }}</td>
+      <td>{{ contract.insuredAge }}</td>
+      <td>{{ contract.category_contract }}</td>
+      <td>{{ contract.monthly_price }} DT</td>
+      <td>{{ contract.status }}</td>
+      <td>
+        <button (click)="editContract(contract.contract_id!)">Modifier</button>
+        <button (click)="deleteContract(contract.contract_id!)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

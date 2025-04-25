@@ -5,9 +5,12 @@ import { NgbdDropdownBasicComponent } from './Client/DonationManagement/donation
 import { BadgeComponent } from './Client/Loan Management/LoanManagement.component';
 import { NgbdButtonsComponent } from './Client/ContractManagement/ContractManagement.component';
 import { TableComponent } from './Client/User/User.component';
-
+import { ContractListComponent } from './Admin/ContractsComponent/ContractComponent/contract-list.component';
+import { ContractAddComponent } from './Admin/ContractsComponent/ContractComponent/contract-add.component';
+import { ContractEditComponent } from './Admin/ContractsComponent/ContractComponent/contract-edit.component';
 
 export const ComponentsRoutes: Routes = [
+	
 	{
 		path: '',
 		children: [
@@ -35,7 +38,16 @@ export const ComponentsRoutes: Routes = [
 			{
 				path: 'buttons',
 				component: NgbdButtonsComponent
-			}
+			},
+			{
+				path: 'admin/contracts',
+				children: [
+				  { path: '', component: ContractListComponent },             // /admin/contracts
+				  { path: 'add', component: ContractAddComponent },           // /admin/contracts/add
+				  { path: '"edit/:id"', component: ContractEditComponent }      // /admin/contracts/edit/ID
+				]
+			  },
+			  
 		]
 	}
 ];

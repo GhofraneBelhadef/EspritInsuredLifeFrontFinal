@@ -1,0 +1,79 @@
+<h2>➕ Ajouter un nouveau contrat</h2>
+
+<form [formGroup]="contractForm" (ngSubmit)="onSubmit()">
+  <!-- Type d'assurance -->
+  <div class="form-group">
+    <label for="insurrance_type">Type d'assurance</label>
+    <select id="insurrance_type" formControlName="insurrance_type">
+      <option value="">-- Sélectionnez --</option>
+      <option value="Life_Insurance">Assurance Vie</option>
+      <option value="Non_lifeinsurance">Assurance Non-Vie</option>
+    </select>
+    <div *ngIf="contractForm.get('insurrance_type')?.invalid && contractForm.get('insurrance_type')?.touched" class="error-message">
+      Le type d'assurance est requis.
+    </div>
+  </div>
+
+  <!-- Âge de l'assuré -->
+  <div class="form-group">
+    <label for="insuredAge">Âge de l'assuré</label>
+    <input id="insuredAge" type="number" formControlName="insuredAge" placeholder="Âge de l'assuré">
+    <div *ngIf="contractForm.get('insuredAge')?.invalid && contractForm.get('insuredAge')?.touched" class="error-message">
+      L'âge est requis.
+    </div>
+  </div>
+
+  <!-- Catégorie -->
+  <div class="form-group">
+    <label for="category_contract">Catégorie</label>
+    <select id="category_contract" formControlName="category_contract">
+      <option value="Standard">Standard</option>
+      <option value="Premium">Premium</option>
+      <option value="Gold">Gold</option>
+    </select>
+    <div *ngIf="contractForm.get('category_contract')?.invalid && contractForm.get('category_contract')?.touched" class="error-message">
+      La catégorie est requise.
+    </div>
+  </div>
+
+  <!-- Date de début -->
+  <div class="form-group">
+    <label for="policy_inception_date">Date de début</label>
+    <input id="policy_inception_date" type="date" formControlName="policy_inception_date">
+    <div *ngIf="contractForm.get('policy_inception_date')?.invalid && contractForm.get('policy_inception_date')?.touched" class="error-message">
+      La date de début est requise.
+    </div>
+  </div>
+
+  <!-- Date de fin -->
+  <div class="form-group">
+    <label for="expiration_date">Date de fin</label>
+    <input id="expiration_date" type="date" formControlName="expiration_date">
+    <div *ngIf="contractForm.get('expiration_date')?.invalid && contractForm.get('expiration_date')?.touched" class="error-message">
+      La date de fin est requise.
+    </div>
+  </div>
+
+  <!-- Prix mensuel -->
+  <div class="form-group">
+    <label for="monthly_price">Prix mensuel</label>
+    <input id="monthly_price" type="number" formControlName="monthly_price" placeholder="Prix mensuel en DT">
+    <div *ngIf="contractForm.get('monthly_price')?.invalid && contractForm.get('monthly_price')?.touched" class="error-message">
+      Le prix mensuel est requis.
+    </div>
+  </div>
+
+  <!-- Statut -->
+  <div class="form-group">
+    <label for="status">Statut</label>
+    <input id="status" type="text" formControlName="status" placeholder="Statut du contrat">
+    <div *ngIf="contractForm.get('status')?.invalid && contractForm.get('status')?.touched" class="error-message">
+      Le statut est requis.
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" [disabled]="contractForm.invalid">✅ Ajouter</button>
+    <button type="button" (click)="contractForm.reset()">❌ Réinitialiser</button>
+  </div>
+</form>

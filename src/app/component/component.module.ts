@@ -1,18 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule} from '@angular/forms';
 import { CardsComponent } from './Client/ClaimManagement/complaint.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComponentsRoutes } from './component.routing';
 import { RiskManagementComponent } from './Client/RiskManagement/RiskManagement.component';
 import { NgbdDropdownBasicComponent } from './Client/DonationManagement/donation.component';
-
 import { NgbdButtonsComponent } from './Client/ContractManagement/ContractManagement.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { TableComponent } from "./Client/User/User.component";
+import { ContractListComponent } from './Admin/ContractsComponent/ContractComponent/contract-list.component';
+import { ContractAddComponent } from './Admin/ContractsComponent/ContractComponent/contract-add.component';
+import { ContractEditComponent } from './Admin/ContractsComponent/ContractComponent/contract-edit.component';
+import { ContractAccountingListComponent } from './Admin/ContractsComponent/ContractAcountingComponent/contractaccounting-list';
 
 @NgModule({
+ 
+  declarations: [
+    ContractAddComponent,
+    ContractListComponent, 
+    ContractEditComponent,
+    ContractAccountingListComponent ],
   imports: [
     CommonModule,
     RouterModule.forChild(ComponentsRoutes),

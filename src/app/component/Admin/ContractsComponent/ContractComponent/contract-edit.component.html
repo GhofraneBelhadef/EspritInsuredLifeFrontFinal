@@ -1,0 +1,16 @@
+<h2>Modifier un contrat</h2>
+
+<form (ngSubmit)="onSubmit()">
+  <!-- Même contenu que le formulaire d’ajout mais lié à l’objet chargé -->
+  <!-- Tous les champs bindés avec [(ngModel)]="contract.nomDuChamp" -->
+  <!-- C’est le même HTML que pour `add`, donc tu peux le réutiliser avec quelques ajustements -->
+  <!-- Exemple -->
+  <label>Type d'assurance :</label>
+  <select [(ngModel)]="contract.insurrance_type" name="insurrance_type" required>
+    <option value="Life_Insurance">Vie</option>
+    <option value="Non_lifeinsurance">Non-vie</option>
+  </select>
+  <!-- ... tous les autres champs identiques ... -->
+
+  <button type="submit">Modifier</button>
+</form>

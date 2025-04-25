@@ -1,0 +1,175 @@
+<nav style="background-color: #106861; color: white; padding: 0.5rem 1rem; border-bottom: 1px solid #145c36;" class="navbar navbar-expand-md">
+    <!-- ============================================================== -->
+    <!-- toggle and nav items -->
+    <!-- ============================================================== -->
+    <ul class="navbar-nav float-start me-auto">
+      <li class="nav-item">
+        <a class="nav-link waves-effect waves-dark" href="/admin/contracts" style="color: white;"> Contracts </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-effect waves-dark" href="admin/contractAccounting"style="color: white;" > ContractAccounting </a>
+       
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-effect waves-dark" href="admin/contractAccounting"style="color: white;" > ContractHolder </a>
+       
+      </li>
+     
+    </ul>
+    <!-- ============================================================== -->
+    <!-- Right side toggle and nav items -->
+    <!-- ============================================================== -->
+    <ul class="navbar-nav float-end">
+      <!-- ============================================================== -->
+      <!-- User profile and search -->
+      <!-- ============================================================== -->
+      <li class="nav-item" ngbDropdown placement="bottom-end">
+        <a
+          ngbDropdownToggle
+          class="nav-link waves-effect waves-dark pro-pic"
+          href="javascript:void(0)"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          
+          <span class="ms-2" style="color: white;">Login</span>
+        </a>
+        <div class="dropdown-menu-right" ngbDropdownMenu>
+          <a class="dropdown-item" href="javascript:void(0)"> My Profile</a>
+          <a class="dropdown-item" href="javascript:void(0)"> My Balance</a>
+          <a class="dropdown-item" href="javascript:void(0)"> Inbox</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="javascript:void(0)"> Account Setting</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="javascript:void(0)"> Logout</a>
+        </div>
+      </li>
+      <!-- ============================================================== -->
+      <!-- User profile and search -->
+      <!-- ============================================================== -->
+    </ul>
+    </nav>
+    
+<div class="container mt-4">
+    <h2 class="mb-4">Liste des Comptes Contractuels</h2>
+  
+    <table class="table table-striped table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th>ID</th>
+          <th>Matricule Fiscale</th>
+          <th>Total Capital</th>
+          <th>Indemnités Versées</th>
+          <th>Total Provisions</th>
+          <th>Créé le</th>
+          <th>Mis à jour le</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let accounting of contractAccountings">
+            <td>{{ accounting?.contract_accounting_id || '-' }}</td>
+            <td>{{ accounting?.matriculeFiscale || '-' }}</td>
+            <td>{{ accounting?.total_capital != null && accounting?.total_capital !== undefined ? (accounting.total_capital | number:'1.2-2') : '0.00' }}</td>
+            <td>{{ accounting?.indemnites_versees != null && accounting?.indemnites_versees !== undefined ? (accounting.indemnites_versees | number:'1.2-2') : '0.00' }}</td>
+            <td>{{ accounting?.totalProvisions != null && accounting?.totalProvisions !== undefined ? (accounting.totalProvisions | number:'1.2-2') : '0.00' }}</td>
+            <td>{{ accounting?.created_at ? (accounting.created_at | date:'short') : '-' }}</td>
+            <td>{{ accounting?.updated_at ? (accounting.updated_at | date:'short') : '-' }}</td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2" (click)="editAccounting(accounting)">Modifier</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteAccounting(accounting.contract_accounting_id)">Supprimer</button>
+            </td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  <hr class="my-5" />
+<!-- Section pour ajouter un compte contractuel -->
+<div class="container mt-4">
+    <h2 class="mb-3">Ajouter un Compte Contractuel</h2>
+
+<div class="card p-4 shadow-sm rounded" style="background-color: #f8f9fa;">
+  <form (ngSubmit)="addAccounting()" #accountingForm="ngForm">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Created At</label>
+        <input type="date" class="form-control" name="created_at" [(ngModel)]="newAccounting.created_at" required />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Matricule Fiscale</label>
+        <input type="text" class="form-control" name="matriculeFiscale" [(ngModel)]="newAccounting.matriculeFiscale" required />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Total Capital</label>
+        <input type="number" step="0.01" class="form-control" name="totalCapital" [(ngModel)]="newAccounting.total_capital" required />
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Updated At</label>
+        <input type="date" class="form-control" name="updated_at" [(ngModel)]="newAccounting.updated_at" required />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Indemnités Versées</label>
+        <input type="number" step="0.01" class="form-control" name="indemnitesVersees" [(ngModel)]="newAccounting.indemnites_versees" />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Total Provisions</label>
+        <input type="number" step="0.01" class="form-control" name="totalProvisions" [(ngModel)]="newAccounting.totalProvisions" />
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2" [disabled]="!accountingForm.form.valid">
+      Ajouter
+    </button>
+  </form>
+</div>
+<!-- 📌 Actions avec images et boutons (styles inline) -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px;">
+
+  <div *ngFor="let accounting of contractAccountings">
+    <div
+      style="background: #f9f9f9; border-radius: 12px; padding: 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer;"
+      (click)="updateCapital(accounting.matriculeFiscale)"
+      title="Mettre à jour le capital"
+    >
+      <img src="assets/images/capital.png" alt="Capital"
+        style="width: 70px; height: 70px; object-fit: contain; margin-bottom: 12px;" />
+      <button style="background-color: #007bff; border: none; color: white; padding: 8px 12px; border-radius: 6px; font-weight: bold;">
+        Mettre à jour le Capital
+      </button>
+    </div>
+  </div>
+
+  <div
+  *ngFor="let accounting of contractAccountings"
+  style="background: #f9f9f9; border-radius: 12px; padding: 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer;"
+  (click)="updateIndemnites(accounting.matriculeFiscale)"
+  title="Mettre à jour les indemnités">
+  <img src="assets/images/indemnites.png" alt="Indemnités"
+       style="width: 70px; height: 70px; object-fit: contain; margin-bottom: 12px;" />
+  <button style="background-color: #007bff; border: none; color: white; padding: 8px 12px; border-radius: 6px; font-weight: bold;">
+    Mettre à jour les Indemnités
+  </button>
+</div>
+  <tr *ngFor="let accounting of contractAccountings">
+    <td>{{ accounting.matriculeFiscale }}</td>
+    <td>
+      <button (click)="calculerBenefice(accounting.matriculeFiscale)">Calculer Bénéfice</button>
+    </td>
+  </tr>
+
+  <div style="background: #f9f9f9; border-radius: 12px; padding: 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer;"
+       (click)="calculerBeneficeTotal()" title="Calculer le bénéfice total">
+    <img src="assets/images/total.png" alt="Total"
+         style="width: 70px; height: 70px; object-fit: contain; margin-bottom: 12px;" />
+    <button style="background-color: #007bff; border: none; color: white; padding: 8px 12px; border-radius: 6px; font-weight: bold;">
+      Calculer Bénéfice Total
+    </button>
+  </div>
+
+</div>
+
