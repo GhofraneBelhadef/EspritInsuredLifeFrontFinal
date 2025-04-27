@@ -8,10 +8,11 @@ import { AuthService } from 'src/app/Services/User/auth.service';
 })
 export class UserListComponent implements OnInit {
   users: any[] = [];
-  page = 0;  // Page courante
-  size = 10;  // Nombre d'utilisateurs par page
-  totalUsers: number = 0;  // Total des utilisateurs
-  totalPages: number = 0;  // Total des pages
+  page = 0;
+  size = 10;
+  totalUsers: number = 0;
+  totalPages: number = 0;
+  searchTerm: string = ''; // 🔥 Nouveau : le terme recherché
 
   constructor(private authService: AuthService) {}
 
@@ -19,35 +20,42 @@ export class UserListComponent implements OnInit {
     this.fetchUsers();
   }
 
-  // Récupère les utilisateurs et met à jour les informations de pagination
   fetchUsers() {
-    this.authService.getAllUsers(this.page, this.size).subscribe(res => {
-      this.users = res.content;
-      this.totalUsers = res.totalElements; // Total des utilisateurs dans la base
-      this.totalPages = res.totalPages;  // Total des pages (pour la pagination)
-    });
+    if (this.searchTerm.trim()) {
+      // Si recherche, appeler searchUsers
+      this.authService.searchUsers(this.searchTerm, this.page, this.size).subscribe(res => {
+        this.users = res.content;
+        this.totalUsers = res.totalElements;
+        this.totalPages = res.totalPages;
+      });
+    } else {
+      // Sinon, charger normalement tous les users
+      this.authService.getAllUsers(this.page, this.size).subscribe(res => {
+        this.users = res.content;
+        this.totalUsers = res.totalElements;
+        this.totalPages = res.totalPages;
+      });
+    }
   }
 
-  // Méthode pour passer à la page suivante
   goToNextPage() {
     if (this.page < this.totalPages - 1) {
       this.page++;
-      this.fetchUsers();  // Récupère les utilisateurs de la nouvelle page
+      this.fetchUsers();
     }
   }
 
-  // Méthode pour revenir à la page précédente
   goToPreviousPage() {
     if (this.page > 0) {
       this.page--;
-      this.fetchUsers();  // Récupère les utilisateurs de la page précédente
+      this.fetchUsers();
     }
   }
+
   deleteUser(id: number) {
     if (confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
       this.authService.deleteAccount(id).subscribe({
         next: () => {
-          // Recharger les utilisateurs après suppression
           this.fetchUsers();
         },
         error: (err) => {
@@ -56,5 +64,10 @@ export class UserListComponent implements OnInit {
       });
     }
   }
-  
+
+  // 🔥 Appelée quand on tape dans la barre de recherche
+  onSearch() {
+    this.page = 0; // toujours revenir page 0 si on fait une recherche
+    this.fetchUsers();
+  }
 }

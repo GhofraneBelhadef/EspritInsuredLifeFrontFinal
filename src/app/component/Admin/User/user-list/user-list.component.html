@@ -1,15 +1,19 @@
 <div class="container">
     <h2>Clients and Admins List</h2>
+     <!-- Barre de recherche -->
+     <div class="form-group mb-3">
+      <input type="text" class="form-control" placeholder="Rechercher par nom, email ou username..." [(ngModel)]="searchTerm" (input)="onSearch()" />
+    </div>
   
     <!-- Tableau des utilisateurs -->
     <table class="table table-striped">
       <thead>
         <tr>
           <th>Photo</th>
-          <th>Nom d'utilisateur</th>
+          <th>Username</th>
           <th>Email</th>
-          <th>Téléphone</th>
-          <th>Rôle</th>
+          <th>Telephone</th>
+          <th>Role</th>
         </tr>
       </thead>
       <tbody>

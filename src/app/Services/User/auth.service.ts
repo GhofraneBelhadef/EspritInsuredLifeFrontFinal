@@ -97,6 +97,14 @@ export class AuthService {
   
     return this.http.delete('http://localhost:9090/api/users/' + id, { headers, responseType: 'text' });
   }
+  searchUsers(query: string, page: number, size: number) {
+    const token = localStorage.getItem('token');
+    return this.http.get<any>(`http://localhost:9090/api/users/search?username=${query}&page=${page}&size=${size}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
   
   
 
