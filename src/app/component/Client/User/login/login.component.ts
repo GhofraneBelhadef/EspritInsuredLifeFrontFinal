@@ -58,4 +58,16 @@ export class LoginComponent {
   
   
 }
+isDarkMode: boolean = false; // Par défaut en mode clair
+
+toggleDarkMode() {
+  this.isDarkMode = !this.isDarkMode;
+
+  if (this.isDarkMode) {
+    document.body.classList.add('dark-mode');
+  } else {
+    document.body.classList.remove('dark-mode');
+  }
+}
+
 }

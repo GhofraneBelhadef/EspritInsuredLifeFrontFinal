@@ -221,5 +221,90 @@
     margin-left: auto;
     margin-right: auto;
   }
-  
+ /* ---------- MODE SOMBRE GÉNÉRAL ---------- */
+
+/* Fond de la page */
+body.dark-mode {
+  background: #121212 !important;
+  color: #e0e0e0;
+}
+
+/* Container principal (boîte blanche autour du login) */
+body.dark-mode .container {
+  background: #1e1e1e;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+}
+
+/* Slogan & titre d’accueil */
+body.dark-mode .slogan-container,
+body.dark-mode .slogan-container h1,
+body.dark-mode .slogan-container p {
+  color: #e0e0e0;
+}
+
+/* Texte et titres du formulaire */
+body.dark-mode h2,
+body.dark-mode label {
+  color: #cbd5e1;
+}
+
+/* Champs de saisie */
+body.dark-mode .input-box input {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #444;
+}
+
+/* Placeholder/label lorsqu’on focus ou valid */
+body.dark-mode .input-box input:focus ~ label,
+body.dark-mode .input-box input:valid ~ label {
+  color: #81e6d9;
+  background: #1e1e1e;
+}
+
+/* Icone œil */
+body.dark-mode #eye-icon {
+  filter: brightness(0.8) invert(1);
+}
+
+/* Liens “Forgot password” et “Signup” */
+body.dark-mode .forgot-pass a,
+body.dark-mode .signup-link a {
+  color: #81e6d9;
+}
+
+/* Bouton principal et boutons secondaires */
+body.dark-mode .btn {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+body.dark-mode .btn:hover {
+  background-color: #444444;
+}
+
+/* Boutons Google & QR */
+body.dark-mode .google-btn,
+body.dark-mode .qr-btn {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #444;
+}
+
+body.dark-mode .google-btn:hover,
+body.dark-mode .qr-btn:hover {
+  background-color: #3a3a3a;
+}
+
+/* Signup link (texte normal) */
+body.dark-mode .signup-link p {
+  color: #cccccc;
+}
+
+/* Si tu veux aussi que ton logo perde sa teinte trop claire */
+body.dark-mode .logo {
+  mix-blend-mode: luminosity;
+}
+
+
   
