@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, EventEmitter, Output } from '@angular/core';
 import { NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Services/User/auth.service';
 
 
 declare var $: any;
@@ -16,7 +17,7 @@ export class NavigationComponent implements AfterViewInit {
 
   public showSearch = false;
 
-  constructor(private modalService: NgbModal, private router: Router) {
+  constructor(private modalService: NgbModal, private router: Router,private authService: AuthService,) {
   }
 
   // This is for Notifications
@@ -115,5 +116,12 @@ export class NavigationComponent implements AfterViewInit {
   ngAfterViewInit() { }
   goToProfile() {
     this.router.navigate(['/user-profile']);
+  }
+  onLogout() {
+    // 1. Appelle le service pour nettoyer la session
+    this.authService.logout();
+
+    // 2. Redirige vers la page de login
+    this.router.navigate(['/login']);
   }
 }
