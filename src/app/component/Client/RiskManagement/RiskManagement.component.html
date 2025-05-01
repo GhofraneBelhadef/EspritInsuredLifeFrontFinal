@@ -106,16 +106,54 @@ body{margin:0;padding:0;background-image:url('assets/images/background.jpg');bac
 <h4 class="card-title mb-0">Téléversement de fichier</h4>
 </div>
 <div class="card-body border-top">
-<form>
-<div class="mb-3">
-<label for="fileInput2" class="form-label">Cliquez pour sélectionner un fichier</label>
-<input class="form-control" type="file" id="fileInput2" accept="application/pdf,.doc,.docx,.jpg,.png,.jpeg"/>
-</div>
-<div class="d-flex justify-content-between">
-<button type="submit" class="btn btn-primary">Envoyer</button>
-<small class="text-muted">Formats autorisés : PDF, DOCX, JPG, PNG</small>
-</div>
-</form>
+    <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <div class="form-group mb-3">
+          <label for="userId" class="form-label">User ID:</label>
+          <input 
+            type="number" 
+            id="userId" 
+            class="form-control" 
+            [(ngModel)]="userId" 
+            name="userId" 
+            required>
+        </div>
+      
+        <div class="form-group mb-3">
+          <label for="medicalRecord" class="form-label">Téléverser Fichier Médical (.pdf):</label>
+          <input 
+            type="file" 
+            id="medicalRecord" 
+            class="form-control" 
+            (change)="onFileSelected($event)" 
+            accept=".pdf" 
+            required>
+        </div>
+      
+        <div class="form-group mb-3">
+          <label for="riskFactorIds" class="form-label">Facteurs de Risque (IDs):</label>
+          <input 
+            type="text" 
+            id="riskFactorIds" 
+            class="form-control" 
+            [(ngModel)]="riskFactorIdsInput" 
+            name="riskFactorIds">
+          <small class="form-text text-muted">
+            Entrez les IDs des facteurs de risque séparés par des virgules (ex: 1,2,3)
+          </small>
+        </div>
+      
+        <div class="form-group mb-3">
+          <label for="userWhatsapp" class="form-label">Numéro WhatsApp:</label>
+          <input 
+            type="text" 
+            id="userWhatsapp" 
+            class="form-control" 
+            [(ngModel)]="userWhatsapp" 
+            name="userWhatsapp">
+        </div>
+      
+        <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
+      </form>        
 </div>
 </div>
 </div>
@@ -193,69 +231,81 @@ Ces informations ont été automatiquement extraites des documents fournis. Veui
 </div>
 <div class="col-lg-12 mt-4">
 <div class="card shadow-sm">
-<div class="card-header bg-gradient-primary text-white">
-<h4 class="mb-0"><i class="fas fa-clipboard-list me-2"></i>📋 Détails des Informations Extraites</h4>
-</div>
-<div class="card-body">
-<div class="row">
-<div class="col-md-6 col-lg-3 mb-4">
-<div class="card info-card age h-100">
-<div class="card-body text-center">
-<div class="info-icon text-info">
-<i class="fas fa-birthday-cake"></i>
-</div>
-<h5>Âge</h5>
-<p class="display-6">42 ans</p>
-<p class="text-muted small">Né le 15/03/1981</p>
-</div>
-</div>
-</div>
-<div class="col-md-6 col-lg-3 mb-4">
-<div class="card info-card medical h-100">
-<div class="card-body text-center">
-<div class="info-icon text-danger">
-<i class="fas fa-heartbeat"></i>
-</div>
-<h5>Historique Médical</h5>
-<ul class="list-unstyled">
-<li><i class="fas fa-check text-success me-2"></i>Hypertension</li>
-<li><i class="fas fa-check text-success me-2"></i>Cholestérol</li>
-<li><i class="fas fa-times text-danger me-2"></i>Diabète</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="col-md-6 col-lg-3 mb-4">
-<div class="card info-card lifestyle h-100">
-<div class="card-body text-center">
-<div class="info-icon text-success">
-<i class="fas fa-running"></i>
-</div>
-<h5>Mode de Vie</h5>
-<ul class="list-unstyled">
-<li><i class="fas fa-smoking-ban text-danger me-2"></i>Non-fumeur</li>
-<li><i class="fas fa-wine-glass-alt text-warning me-2"></i>Alcool occasionnel</li>
-<li><i class="fas fa-dumbbell text-success me-2"></i>Activité sportive</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="col-md-6 col-lg-3 mb-4">
-<div class="card info-card family h-100">
-<div class="card-body text-center">
-<div class="info-icon text-primary">
-<i class="fas fa-family"></i>
-</div>
-<h5>Historique Familial</h5>
-<ul class="list-unstyled">
-<li><i class="fas fa-check text-danger me-2"></i>Maladie cardiaque</li>
-<li><i class="fas fa-times text-success me-2"></i>Cancer</li>
-<li><i class="fas fa-check text-danger me-2"></i>Diabète</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
+  <div class="card-header bg-gradient-primary text-white">
+    <h4 class="mb-0"><i class="fas fa-clipboard-list me-2"></i>📋 Détails des Informations Extraites</h4>
+  </div>
+  <div class="card-body">
+    <!-- Champ d'entrée pour l'ID de l'utilisateur -->
+    <div class="mb-4">
+      <label for="userId" class="form-label">ID Utilisateur</label>
+      <input type="number" class="form-control" id="userId" [(ngModel)]="userId" placeholder="Entrez l'ID de l'utilisateur">
+    </div>
+    <div class="mb-4 text-end">
+      <button type="button" class="btn btn-primary" (click)="onSearch()">
+        <i class="fas fa-search me-2"></i>Rechercher
+      </button>
+    </div>
+  
+    <!-- Affichage des informations de l'évaluation de risque -->
+    <div *ngIf="riskAssessment">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="card info-card age h-100">
+            <div class="card-body text-center">
+              <div class="info-icon text-info">
+                <i class="fas fa-birthday-cake"></i>
+              </div>
+              <h5>Âge</h5>
+              <p class="display-6">{{ riskAssessment.age }} ans</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="card info-card medical h-100">
+            <div class="card-body text-center">
+              <div class="info-icon text-danger">
+                <i class="fas fa-heartbeat"></i>
+              </div>
+              <h5>Historique Médical</h5>
+              <ul class="list-unstyled">
+                <li *ngFor="let disease of riskAssessment.chronicDiseaseArray">
+                  <i class="fas fa-check text-success me-2"></i>{{ disease }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="card info-card price h-100">
+            <div class="card-body text-center">
+              <div class="info-icon text-warning">
+                <i class="fas fa-dollar-sign"></i>
+              </div>
+              <h5>Prix</h5>
+              <p class="display-6">{{ riskAssessment.price | currency:'EUR' }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="card info-card risk-score h-100">
+            <div class="card-body text-center">
+              <div class="info-icon text-primary">
+                <i class="fas fa-exclamation-triangle"></i>
+              </div>
+              <h5>Risk Score</h5>
+              <p class="display-6">{{ riskAssessment.riskScore }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Message d'erreur -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  </div>
+  
 <div class="alert alert-info mt-3">
 <i class="fas fa-info-circle me-2"></i>
 Ces informations complémentaires ont été analysées pour le calcul du risque.
@@ -514,7 +564,7 @@ Ces informations complémentaires ont été analysées pour le calcul du risque.
 </div>
 </div>
 </div>
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded',function(){
