@@ -20,13 +20,18 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { Approutes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './shared/spinner.component';
-
+import { ReportingComponent } from './component/Admin/ContractsComponent/reporting/reporting.component';
+import { NgChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
     SpinnerComponent,
+    ReportingComponent,
+
+ 
   ],
   imports: [
+    NgChartsModule,
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,

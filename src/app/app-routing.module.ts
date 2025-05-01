@@ -6,7 +6,7 @@ import { ContractListComponent } from './component/Admin/ContractsComponent/Cont
 import { ContractAddComponent } from './component/Admin/ContractsComponent/ContractComponent/contract-add.component';
 import { ContractEditComponent } from './component/Admin/ContractsComponent/ContractComponent/contract-edit.component';
 import { ContractAccountingListComponent } from './component/Admin/ContractsComponent/ContractAcountingComponent/contractaccounting-list';
-
+import { ReportingComponent } from './component/Admin/ContractsComponent/reporting/reporting.component';
 
 export const Approutes: Routes = [
   { 
@@ -42,7 +42,9 @@ export const Approutes: Routes = [
   {
     path: 'admin/contractAccounting',
     component: ContractAccountingListComponent
+   
   },
+  { path: 'admin/reporting', component: ReportingComponent },
 
   {
     path: '**',
