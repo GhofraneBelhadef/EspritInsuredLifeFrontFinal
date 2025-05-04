@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esprit Insured Life - Tableau de Bord Risk Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      /* Styles pour la section Gestion des Evaluations de Risque */
+.assessments-section {
+    animation: fadeIn 1.3s ease forwards;
+}
+
+.risk-row {
+    transition: all 0.3s ease;
+}
+
+.risk-row:hover {
+    transform: translateX(5px);
+    background-color: rgba(67, 97, 238, 0.05) !important;
+}
+
+.btn-action {
+    transition: all 0.3s ease;
+    border-radius: 50% !important;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-action:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.bg-orange {
+    background-color: var(--warning-color) !important;
+}
+
+.bg-green {
+    background-color: var(--success-color) !important;
+}
+
+.bg-red {
+    background-color: var(--danger-color) !important;
+}
+
+.risk-score-display {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.risk-score-display:hover {
+    transform: scale(1.02);
+}
+
+.progress-bar {
+    transition: width 1s ease;
+}
+
+.page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.page-link {
+    color: var(--primary-color);
+}
+
+/* Animation pour les lignes du tableau */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.risk-row:nth-child(1) { animation: slideIn 0.3s ease forwards; }
+.risk-row:nth-child(2) { animation: slideIn 0.5s ease forwards; }
+.risk-row:nth-child(3) { animation: slideIn 0.7s ease forwards; }
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --danger-color: #f72585;
+            --warning-color: #f77f00;
+            --success-color: #4cc9f0;
+            --info-color: #560bad;
+            
+            --text-primary: #f8f9fa;
+            --text-secondary: #e9ecef;
+            --text-muted: #adb5bd;
+            
+            --bg-dark: #212529;
+            --bg-darker: #1a1e21;
+            --bg-card: #2b3035;
+            --bg-card-hover: #343a40;
+            
+            --border-color: #495057;
+            
+            --low-risk: #4cc9f0;
+            --moderate-risk: #f77f00;
+            --high-risk: #f72585;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #212529;
+            transition: all 0.3s ease;
+            background-image: url('assets/images/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.92);
+            z-index: -1;
+            backdrop-filter: blur(2px);
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(245,245,255,0.98) 100%);
+            color: #212529;
+            text-align: center;
+            padding: 50px 20px;
+            border-radius: 20px;
+            margin: 30px auto;
+            max-width: 1200px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+            border: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .welcome-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .welcome-section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--success-color));
+            animation: rainbow 8s linear infinite;
+            background-size: 400% 100%;
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+
+        .welcome-header {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .title-word {
+            display: inline-block;
+            animation: floatText 3s ease-in-out infinite;
+            font-size: 2.8rem;
+            margin: 0 5px;
+            color: #4361ee;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .title-word::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: currentColor;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .title-word:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .title-word-2 { animation-delay: 0.3s; color: #4895ef; }
+        .title-word-3 { animation-delay: 0.6s; color: #4cc9f0; }
+
+        @keyframes floatText {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .welcome-lead {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            color: #495057;
+            position: relative;
+            display: inline-block;
+        }
+
+        .welcome-lead::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 3px;
+        }
+
+        .dashboard-container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 2.5rem;
+            display: block;
+            background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(245,245,255,0.98) 100%);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+            border: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            margin-bottom: 50px;
+        }
+
+        .dashboard-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .dashboard-container h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .dashboard-container h2::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: 3px;
+        }
+
+        .dashboard-container p {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 10px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover::before {
+            width: 8px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2 i {
+            font-size: 1.4rem;
+            color: var(--accent-color);
+        }
+
+        .value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #333;
+            margin: 15px 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .value::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .alert {
+            color: var(--danger-color);
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background-color: rgba(247, 37, 133, 0.1);
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .alert:hover {
+            background-color: rgba(247, 37, 133, 0.2);
+            transform: translateX(5px);
+        }
+
+        .alert i {
+            font-size: 1.1rem;
+        }
+
+        ul {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        ul li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        .risk-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 5px 0;
+            background-color: rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+        }
+
+        .risk-item:hover {
+            background-color: rgba(0,0,0,0.08);
+            transform: translateX(5px);
+        }
+
+        .risk-item .risk-value {
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .low-risk { color: var(--low-risk); }
+        .moderate-risk { color: var(--moderate-risk); }
+        .high-risk { color: var(--high-risk); }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card:nth-child(1) { animation: fadeIn 0.5s ease forwards; }
+        .card:nth-child(2) { animation: fadeIn 0.7s ease forwards; }
+        .card:nth-child(3) { animation: fadeIn 0.9s ease forwards; }
+        .card:nth-child(4) { animation: fadeIn 1.1s ease forwards; }
+
+        /* Pulse animation for important elements */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Floating elements */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .title-word {
+                font-size: 2rem;
+            }
+            
+            .welcome-lead {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Section -->
+    <section class="welcome-section" id="welcome-section">
+        <div class="welcome-header">
+            <h1>
+                <span class="title-word title-word-1">Esprit</span>
+                <span class="title-word title-word-2">Insured</span>
+                <span class="title-word title-word-3">Life</span>
+            </h1>
+            <p class="welcome-lead">Analyse de risque intelligente et dynamique</p>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <div class="dashboard-container" id="dashboard-container">
+        <h2>Bienvenue sur le tableau de bord Risk Management</h2>
+        <p>Visualisation des données de risque en temps réel pour une prise de décision éclairée</p>
+
+        <!-- Tableau de Bord Global -->
+        <div class="dashboard">
+            <div class="card">
+                <h2><i class="fas fa-users"></i> Nombre total de clients</h2>
+                <div class="value pulse" style="color: var(--primary-color);">{{ totalRiskAssessments }}</div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-chart-line"></i> Moyenne des RiskScores</h2>
+                <div class="value" style="color: var(--accent-color);">{{ averageRiskScore | number:'1.1-1' }}</div>
+                <div class="progress" style="height: 8px; border-radius: 4px; background: rgba(0,0,0,0.1); margin: 15px 0;">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 56.3%;" aria-valuenow="56.3" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-exclamation-triangle"></i> Clients par niveau de risque</h2>
+                <ul>
+                    <li class="risk-item">
+                        <span>Faible risque</span>
+                        <span class="risk-value low-risk">620</span>
+                    </li>
+                    <li class="risk-item">
+                        <span>Risque modéré</span>
+                        <span class="risk-value moderate-risk">450</span>
+                    </li>
+                    <li class="risk-item">
+                        <span>Risque élevé</span>
+                        <span class="risk-value high-risk pulse">180</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Gestion des Evaluations de Risque -->
+<div class="assessments-section mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2><i class="fas fa-clipboard-list me-2"></i> Gestion des Evaluations de Risque</h2>
+      <button class="btn btn-primary" style="background: var(--primary-color); border: none;">
+          <i class="fas fa-plus me-2"></i>Nouvelle Évaluation
+      </button>
+  </div>
+
+  <!-- Filtres -->
+  <div class="mb-3">
+    <input type="text" [(ngModel)]="searchTerm" class="form-control" placeholder="Rechercher par ID utilisateur ou WhatsApp">
+    <button class="btn btn-primary mt-2" (click)="onSearch()">Rechercher</button>
+  </div>
+
+  <!-- Nouvelle section pour l'historique des facteurs de risque -->
+  <div class="mb-3">
+    <label for="userIdInput" class="form-label">Entrer l'ID de l'utilisateur :</label>
+    <input type="number" [(ngModel)]="inputUserId" class="form-control" id="userIdInput" placeholder="Ex: 123">
+    <button 
+      class="btn btn-primary mt-2" 
+      [disabled]="!inputUserId" 
+      (click)="viewRiskFactorHistory(inputUserId!)">
+      Voir l'historique
+    </button>
+  </div>
+
+  <div *ngIf="showHistory" class="mt-4">
+    <h5>Historique des modifications pour l'utilisateur {{ selectedUserId }}</h5>
+    <button class="btn btn-sm btn-danger mb-2" (click)="closeHistory()">Fermer</button>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Date de modification</th>
+          <th>Facteur de risque ID</th>
+          <th>Valeur</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let history of riskHistory">
+          <td>{{ history.changeDate | date:'short' }}</td>
+          <td>{{ history.riskFactorId }}</td>
+          <td>{{ history.factorValue }}</td>
+          <td>{{ history.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Tableau des Evaluations -->
+  <div class="container mt-4">
+    <h2 class="mb-4">Liste des Risk Assessments</h2>
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>User ID</th>
+          <th>Type de Risque</th>
+          <th>Score</th>
+          <th>Prix</th>
+          <th>Âge</th>
+          <th>Maladie Chronique</th>
+          <th>Whatsapp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let assessment of riskAssessments">
+          <td>{{ assessment.assessmentId }}</td>
+          <td>{{ assessment.userId }}</td>
+          <td>{{ assessment.riskType }}</td>
+          <td>{{ assessment.riskScore }}</td>
+          <td>{{ assessment.price | currency:'TND' }}</td>
+          <td>{{ assessment.age }}</td>
+          <td>{{ assessment.chronicDisease }}</td>
+          <td>{{ assessment.userWhatsapp }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <nav aria-label="Pagination">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 0">
+          <button class="page-link" (click)="previousPage()">Précédent</button>
+        </li>
+        <li class="page-item disabled">
+          <span class="page-link">Page {{ currentPage + 1 }}</span>
+        </li>
+        <li class="page-item" [class.disabled]="!hasNextPage">
+          <button class="page-link" (click)="nextPage()">Suivant</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<!-- Modal pour l'évolution du score -->
+<div class="modal fade" id="scoreEvolutionModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Évolution du RiskScore - Jean Dupont</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <canvas id="scoreEvolutionChart" height="300"></canvas>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal de notification -->
+<div class="modal fade" id="notificationModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Notifier l'utilisateur</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div class="mb-3">
+                  <label class="form-label">Méthode de notification</label>
+                  <select class="form-select">
+                      <option value="email">Email</option>
+                      <option value="whatsapp">WhatsApp</option>
+                      <option value="sms">SMS</option>
+                  </select>
+              </div>
+              <div class="mb-3">
+                  <label class="form-label">Message</label>
+                  <textarea class="form-control" rows="5">Bonjour [Nom], 
+
+Votre dernier RiskScore est de [Score]. Nous vous recommandons de [Recommandation].
+
+Cordialement,
+L'équipe Esprit Insured Life</textarea>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <button type="button" class="btn btn-primary">Envoyer</button>
+          </div>
+      </div>
+  </div>
+</div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Initialisation des tooltips
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+});
+
+// Gestion des clics sur les boutons d'action
+document.querySelectorAll('.btn-action').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        
+        const row = this.closest('.risk-row');
+        const score = row.querySelector('.risk-score-display').getAttribute('data-score');
+        const userName = row.querySelector('.fw-bold').textContent;
+        
+        if (this.querySelector('.fa-chart-line')) {
+            // Bouton "Voir l'évolution"
+            showScoreEvolutionChart(userName, score);
+        } else if (this.querySelector('.fa-paper-plane')) {
+            // Bouton "Notifier"
+            const modal = new bootstrap.Modal(document.getElementById('notificationModal'));
+            modal.show();
+        } else if (this.querySelector('.fa-edit')) {
+            // Bouton "Modifier"
+            editScore(this, score);
+        } else if (this.querySelector('.fa-trash-alt')) {
+            // Bouton "Supprimer"
+            deleteAssessment(row);
+        }
+    });
+});
+
+// Fonction pour afficher le graphique d'évolution
+function showScoreEvolutionChart(userName, currentScore) {
+    const ctx = document.getElementById('scoreEvolutionChart').getContext('2d');
+    
+    // Données factices pour la démo
+    const labels = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'];
+    const data = [45, 52, 60, 58, 65, parseInt(currentScore)];
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'RiskScore',
+                data: data,
+                borderColor: 'rgba(67, 97, 238, 1)',
+                backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: 'white',
+                pointBorderColor: 'rgba(67, 97, 238, 1)',
+                pointRadius: 5,
+                pointHoverRadius: 7
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return 'Score: ' + context.parsed.y;
+                        }
+                    }
+                }
+            }
+        }
+    });
+    
+    const modal = new bootstrap.Modal(document.getElementById('scoreEvolutionModal'));
+    modal.show();
+}
+
+// Fonction pour modifier un score
+function editScore(button, currentScore) {
+    const newScore = prompt("Modifier le RiskScore (0-100):", currentScore);
+    if (newScore !== null && !isNaN(newScore)) {
+        const scoreDisplay = button.closest('.risk-row').querySelector('.risk-score-display');
+        const progressBar = scoreDisplay.querySelector('.progress-bar');
+        
+        // Mise à jour visuelle
+        scoreDisplay.setAttribute('data-score', newScore);
+        progressBar.style.width = newScore + '%';
+        progressBar.textContent = newScore;
+        progressBar.setAttribute('aria-valuenow', newScore);
+        
+        // Changement de couleur en fonction du score
+        if (newScore < 40) {
+            progressBar.className = 'progress-bar bg-success';
+        } else if (newScore < 70) {
+            progressBar.className = 'progress-bar bg-warning';
+        } else {
+            progressBar.className = 'progress-bar bg-danger';
+        }
+        
+        // Animation de confirmation
+        button.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => {
+            button.innerHTML = '<i class="fas fa-edit"></i>';
+        }, 1000);
+    }
+}
+
+// Fonction pour supprimer une évaluation
+function deleteAssessment(row) {
+    if (confirm("Êtes-vous sûr de vouloir supprimer cette évaluation ?")) {
+        row.style.transform = 'translateX(100%)';
+        row.style.opacity = '0';
+        setTimeout(() => {
+            row.remove();
+        }, 300);
+    }
+}
+
+// Animation au survol des lignes
+document.querySelectorAll('.risk-row').forEach(row => {
+    row.addEventListener('mouseenter', function() {
+        this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+    });
+    row.addEventListener('mouseleave', function() {
+        this.style.boxShadow = 'none';
+    });
+});
+        // Animation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Effet de vague sur le titre
+            const titleWords = document.querySelectorAll('.title-word');
+            titleWords.forEach((word, index) => {
+                word.style.animationDelay = `${index * 0.3}s`;
+            });
+            
+            // Effet de scroll pour les cartes
+            const cards = document.querySelectorAll('.card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                card.style.animationPlayState = 'paused';
+                observer.observe(card);
+            });
+            
+            // Effet de survol interactif
+            document.querySelectorAll('.risk-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.querySelector('.risk-value').classList.add('floating');
+                });
+                item.addEventListener('mouseleave', function() {
+                    this.querySelector('.risk-value').classList.remove('floating');
+                });
+            });
+            
+            // Simulation de données dynamiques (pour la démo)
+            setInterval(() => {
+                const valueElements = document.querySelectorAll('.value');
+                valueElements.forEach(el => {
+                    el.classList.add('pulse');
+                    setTimeout(() => {
+                        el.classList.remove('pulse');
+                    }, 1000);
+                });
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

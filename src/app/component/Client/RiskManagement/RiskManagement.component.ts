@@ -21,10 +21,41 @@ export class RiskManagementComponent implements OnInit {
   public userWhatsapp: string = '';
   medicalRecordFile: File | null = null;
   public riskFactorIdsInput: string = '';
+  public riskFactorHistory: any[] = [];
+  showHistory: boolean = false;
+  riskAssessments: any[] = [];
+  currentPage: number = 0;
+  pageSize: number = 5;
+  hasNextPage: boolean = true;
 
   constructor(private riskAssessmentService: RiskAssessmentService) {}
-
+  loadRiskAssessments() {
+    this.riskAssessmentService.getAllRiskAssessmentsByPage(this.currentPage, this.pageSize).subscribe({
+      next: response => {
+        this.riskAssessments = response.content;
+        this.hasNextPage = !response.last; // pour désactiver le bouton "Suivant" s'il n'y a plus de pages
+      },
+      error: err => {
+        console.error('Erreur lors du chargement des données paginées', err);
+      }
+    });
+  }
+  
+  nextPage() {
+    if (this.hasNextPage) {
+      this.currentPage++;
+      this.loadRiskAssessments();
+    }
+  }
+  
+  previousPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadRiskAssessments();
+    }
+  }
   ngOnInit(): void {
+    this.loadRiskAssessments();
     this.alerts.push(
       { id: 1, type: 'primary', message: 'This is a primary alert' },
       { id: 2, type: 'info', message: 'This is an info alert' },
@@ -45,7 +76,13 @@ export class RiskManagementComponent implements OnInit {
       .map(id => parseInt(id.trim(), 10))
       .filter(id => !isNaN(id));
   }
-
+  getColor(score: number): string {
+    if (score < 40) return '#28a745';      // Vert
+    if (score < 60) return '#ffc107';      // Jaune
+    if (score < 75) return '#fd7e14';      // Orange
+    return '#dc3545';                      // Rouge
+  }
+  
   onSubmit(): void {
     if (this.userId) {
       this.parseRiskFactorIds();
@@ -85,6 +122,16 @@ export class RiskManagementComponent implements OnInit {
 
   onSearch(): void {
     if (this.userId > 0) {
+      this.riskAssessmentService.getRiskFactorHistory(this.userId).subscribe({
+        next: (historyData) => {
+          this.riskFactorHistory = historyData;
+          this.showHistory = true;
+          console.log('Historique du risque :', this.riskFactorHistory);
+        },
+        error: (error) => {
+          console.error('Erreur lors du chargement de l\'historique des facteurs de risque', error);
+        }
+      });      
       this.riskAssessmentService.getRiskAssessmentById(this.userId).subscribe({
         next: (data) => {
           this.riskAssessment = data;

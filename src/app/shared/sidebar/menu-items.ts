@@ -22,8 +22,8 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '/component/badges',
-    title: 'Loan Management',
-    icon: 'bi bi-cash-coin',
+    title: 'Risk Management',
+    icon: 'bi bi-bell',
     class: '',
     extralink: false,
     submenu: []
