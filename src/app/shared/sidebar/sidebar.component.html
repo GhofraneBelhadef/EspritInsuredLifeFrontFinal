@@ -1,5 +1,25 @@
 <nav class="sidebar-nav">
+    <div *ngIf="user" style="text-align: center; padding: 20px 10px; background-color: #f9f9f9; border-bottom: 1px solid #e0e0e0; border-radius: 0 0 15px 15px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);">
+  
+        <img 
+          *ngIf="user.photoProfil"
+          [src]="'data:image/png;base64,' + user.photoProfil" 
+          alt="Profil"
+          style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid #2f855a; box-shadow: 0 0 8px rgba(0, 128, 0, 0.2); margin-bottom: 10px;" />
+      
+        <img 
+          *ngIf="!user.photoProfil"
+          src="assets/images/avatar.jpg" 
+          alt="Photo de profil par défaut"
+          style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid #2f855a; box-shadow: 0 0 8px rgba(0, 128, 0, 0.2); margin-bottom: 10px;" />
+      
+        <div style="font-size: 16px; font-weight: 600; color: #2f855a;">
+          {{ user.username }}
+        </div>
+      </div>
+      
     <ul id="sidebarnav">
+        
         <!-- First level menu -->
         <li class="sidebar-item" [class.active]="showMenu === sidebarnavItem.title" *ngFor="let sidebarnavItem of sidebarnavItems"
             [routerLinkActive]="sidebarnavItem.submenu.length != 0 ? '' : 'active'">

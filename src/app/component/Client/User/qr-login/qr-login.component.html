@@ -1,10 +1,10 @@
 <div class="qr-container">
-    <h2>Connexion par QR Code</h2>
+    <h2>Connexion with QR Code</h2>
   
     <div class="form-group">
       <label for="username">Type your username :</label>
       <input type="text" [(ngModel)]="username" id="username" />
-      <button (click)="generateQr()">Générer le QR Code</button>
+      <button (click)="generateQr()">Generate QR Code</button>
     </div>
   
     <div *ngIf="qrCodeData" class="qr-section">
