@@ -1,0 +1,128 @@
+<div class="container py-5">
+  <!-- Header Section -->
+  <div class="text-center mb-5">
+    <h1 class="display-4 text-success fw-bold animate__animated animate__fadeInDown">Your Insurance Dashboard</h1>
+    <p class="text-muted animate__animated animate__fadeInUp">Manage your contracts, request new ones, and view your coverage.</p>
+  </div>
+
+  <!-- Spinner While Loading -->
+  <div *ngIf="isLoading" class="text-center my-5">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+ <!-- Graphs Section: Type & Status -->
+<div class="row mb-5" *ngIf="!isLoading">
+  <!-- Contract Type Distribution -->
+  <div class="col-md-6 animate__animated animate__fadeInLeft d-flex flex-column align-items-center">
+    <h5 class="text-center text-primary mb-2">Contract Type Distribution</h5>
+    <div style="max-width: 300px; max-height: 250px;">
+      <canvas
+        baseChart
+        [data]="pieChartData"
+        [labels]="pieChartLabels"
+        [type]="pieChartType"
+        [options]="{ responsive: true, maintainAspectRatio: false }"
+      ></canvas>
+    </div>
+  </div>
+
+  <!-- Contract Status Distribution (BAR CHART) -->
+  <div class="col-md-6 animate__animated animate__fadeInRight d-flex flex-column align-items-center">
+    <h5 class="text-center text-primary mb-2">Contract Status Distribution</h5>
+    <div style="max-width: 300px; max-height: 250px;">
+      <canvas
+        baseChart
+        [data]="statusChartData"
+        [type]="'bar'"
+        [options]="barChartOptions"
+      ></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Search Bar -->
+<div class="mb-4" *ngIf="!isLoading">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Search by insurance type (e.g., Life_Insurance)..."
+    [(ngModel)]="searchTerm"
+  />
+</div>
+
+
+  <!-- Contracts Section -->
+  <div *ngIf="filteredContracts.length > 0 && !isLoading">
+    <h2 class="text-primary fw-bold mb-4 animate__animated animate__fadeInLeft">Your Active Contracts</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div *ngFor="let contract of filteredContracts" class="col animate__animated animate__zoomIn">
+        <div class="card shadow border-0 rounded-4">
+          <div class="card-body">
+            <h5 class="card-title text-success">{{ contract.insurrance_type }}</h5>
+            <p class="card-text">Category: {{ contract.category_contract }}</p>
+            <p class="card-text">Monthly: €{{ contract.monthly_price }}</p>
+            <p class="card-text">Status: {{ contract.status }}</p>
+
+            <button (click)="toggleDetails(contract.id)" class="btn btn-sm btn-outline-info w-100 mb-2">
+              {{ showDetailsMap[contract.id] ? 'Hide Details' : 'Show Details' }}
+            </button>
+
+            <div *ngIf="showDetailsMap[contract.id]" class="bg-light p-3 rounded">
+              <p class="mb-1"><strong>Start:</strong> {{ contract.policy_inception_date }}</p>
+              <p class="mb-1"><strong>End:</strong> {{ contract.expiration_date }}</p>
+              <p class="mb-1"><strong>Age:</strong> {{ contract.insuredAge }}</p>
+              <!-- Ajoute ici d'autres infos si tu veux -->
+            </div>
+
+            <button (click)="cancelContract(contract.id)" class="btn btn-outline-danger w-100 mt-2">
+              Cancel Contract
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Contracts Found -->
+  <div *ngIf="filteredContracts.length === 0 && !isLoading" class="alert alert-warning text-center mt-4">
+    No contracts found matching your search.
+  </div>
+
+  <!-- Our Products Section -->
+  <div class="mt-5">
+    <h3 class="text-center text-success fw-bold mb-4">Our Products</h3>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      <!-- Life Insurance Card -->
+      <div class="col animate__animated animate__fadeInLeft">
+        <div class="card shadow-sm rounded-4">
+          <img src="assets/images/assurance vie.jpg" class="card-img-top" alt="Life Insurance" style="height: 180px; object-fit: cover;">
+          <div class="card-body">
+            <h4 class="card-title text-success">Life Insurance</h4>
+            <p class="card-text">Protection for your loved ones with secure and guaranteed benefits.</p>
+            <div class="d-flex justify-content-between">
+              <button (click)="navigateToRequest('Life_Insurance')" class="btn btn-outline-success">Request Contract</button>
+              <button class="btn btn-outline-primary" [routerLink]="['/contract-details', 'life']">View Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Non-Life Insurance Card -->
+      <div class="col animate__animated animate__fadeInRight">
+        <div class="card shadow-sm rounded-4">
+          <img src="assets/images/assurancenonvie.jpeg" class="card-img-top" alt="Non-Life Insurance" style="height: 180px; object-fit: cover;">
+          <div class="card-body">
+            <h4 class="card-title text-success">Non-Life Insurance</h4>
+            <p class="card-text">Coverage for health, car, home, and more to ensure peace of mind.</p>
+            <div class="d-flex justify-content-between">
+              <button (click)="navigateToRequest('Non_lifeinsurance')" class="btn btn-outline-success">Request Contract</button>
+              <button class="btn btn-outline-primary" [routerLink]="['/contract-details', 'non-life']">View Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

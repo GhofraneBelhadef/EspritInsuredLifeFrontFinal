@@ -1,0 +1,52 @@
+import { Routes } from '@angular/router';
+import { RiskManagementComponent } from './Client/RiskManagement/RiskManagement.component';
+import { CardsComponent } from './Client/ClaimManagement/complaint.component';
+import { NgbdDropdownBasicComponent } from './Client/DonationManagement/donation.component';
+import { BadgeComponent } from './Client/Loan Management/LoanManagement.component';
+import { ContractManagementComponent } from './Client/ContractManagement/ContractManagement.component';
+import { TableComponent } from './Client/User/User.component';
+import { ContractListComponent } from './Admin/ContractsComponent/ContractComponent/contract-list.component';
+
+
+export const ComponentsRoutes: Routes = [
+	
+	{
+		path: '',
+		children: [
+			{
+				path: 'table',
+				component: TableComponent
+			},
+			
+			
+			{
+				path: 'badges',
+				component: BadgeComponent
+			},
+			{
+				path: 'alert',
+				component: RiskManagementComponent
+			},
+			{
+				path: 'dropdown',
+				component: NgbdDropdownBasicComponent
+			},
+			
+			{ path: 'card',
+			 component: CardsComponent },
+			{
+				path: 'buttons',
+				component: ContractManagementComponent
+			},
+
+			{
+				path: 'admin/contracts',
+				children: [
+				  { path: '', component: ContractListComponent },             // /admin/contracts
+				   // /admin/contracts/edit/ID
+				]
+			  },
+			  
+		]
+	}
+];

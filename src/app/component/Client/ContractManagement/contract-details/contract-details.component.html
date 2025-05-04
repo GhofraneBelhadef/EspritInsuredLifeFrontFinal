@@ -1,0 +1,18 @@
+<div class="page-container animate-fade-in">
+  <h2 class="title">{{ contractType === 'life' ? 'Life Insurance Products' : 'Non-Life Insurance Products' }}</h2>
+
+  <div class="grid">
+    <div class="card" *ngFor="let product of contractType === 'life' ? lifeProducts : nonLifeProducts">
+      <img [src]="product.image" alt="{{ product.title }}" class="product-img" />
+      <div class="card-content">
+        <h3>{{ product.title }}</h3>
+        <p>{{ product.description }}</p>
+
+        <!-- Détails supplémentaires pour chaque produit -->
+        <p><strong>Details:</strong> {{ product.details }}</p>
+
+        <button class="btn" [routerLink]="['/request-contract']" [queryParams]="{ product: product.title }">Request This Product</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,241 @@
+
+
+
+<nav style="background-color: #106861; color: white; padding: 0.5rem 1rem; border-bottom: 1px solid #145c36;" class="navbar navbar-expand-md">
+  <!-- ============================================================== -->
+  <!-- toggle and nav items -->
+  <!-- ============================================================== -->
+  <ul class="navbar-nav float-start me-auto">
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" href="/admin/contracts" style="color: white;"> Contracts </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" href="admin/contractAccounting"style="color: white;" > ContractAccounting </a>
+     
+    </li>
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" href="admin/contractAccounting"style="color: white;" > ContractHolder </a>
+     
+    </li>
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" href="admin/reporting"style="color: white;" > Reporting </a>
+     
+    </li>
+   
+  </ul>
+  <!-- ============================================================== -->
+  <!-- Right side toggle and nav items -->
+  <!-- ============================================================== -->
+  <ul class="navbar-nav float-end">
+    <!-- ============================================================== -->
+    <!-- User profile and search -->
+    <!-- ============================================================== -->
+    <li class="nav-item" ngbDropdown placement="bottom-end">
+      <a
+        ngbDropdownToggle
+        class="nav-link waves-effect waves-dark pro-pic"
+        href="javascript:void(0)"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        
+        <span class="ms-2" style="color: white;">Login</span>
+      </a>
+      <div class="dropdown-menu-right" ngbDropdownMenu>
+        <a class="dropdown-item" href="javascript:void(0)"> My Profile</a>
+        <a class="dropdown-item" href="javascript:void(0)"> My Balance</a>
+        <a class="dropdown-item" href="javascript:void(0)"> Inbox</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="javascript:void(0)"> Account Setting</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="javascript:void(0)"> Logout</a>
+      </div>
+    </li>
+    <!-- ============================================================== -->
+    <!-- User profile and search -->
+    <!-- ============================================================== -->
+  </ul>
+  </nav>
+  
+<div class="container py-5 d-flex justify-content-center align-items-center min-vh-100">
+  <div class="w-100 bg-white p-4 shadow-lg rounded-4" style="max-width: 1200px; animation: fadeInUp 0.6s ease;">
+    <h2 class="text-center mb-4 fw-bold text-success">📄 Contracts List</h2>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle text-center table-bordered">
+        <thead class="table-success text-uppercase text-white" style="background-color:#28cb5f">
+          <tr>
+            <th>ID</th>
+            <th>Insurance Type</th>
+            <th>Insured Age</th>
+            <th>Contract Category</th>
+            <th>Monthly Price</th>
+            <th>Status</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody class="table-light">
+          <tr *ngFor="let contract of contracts">
+            <td>{{ contract?.contract_id || '-' }}</td>
+            <td>{{ contract?.insurrance_type || '-' }}</td>
+            <td>{{ contract?.insuredAge || '-' }}</td>
+            <td>{{ contract?.category_contract || '-' }}</td>
+            <td>{{ contract?.monthly_price != null ? (contract.monthly_price | number:'1.2-2') + ' DT' : '0.00 DT' }}</td>
+            <td>{{ contract?.status || '-' }}</td>
+            <td>{{ contract?. Policy_inception_date | date:'shortDate' }}</td>
+            <td>{{ contract?.expiration_date | date:'shortDate' }}</td>
+            <td class="d-flex justify-content-center gap-2">
+              <button class="btn btn-sm btn-outline-primary btn-green-hover"
+              (click)="editContract(contract)">
+              ✏️ Edit
+      </button>
+              <button class="btn btn-sm btn-outline-danger"
+                (click)="deleteContract(contract.contract_id!)">
+                🗑️ Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="container mt-5">
+  <div class="card shadow rounded-4 border-0" style="background-color: #f8f9fa;">
+    <div class="card-header text-center text-white rounded-top-4 py-3" style="background-color: #28cb5f;">
+      <h4 class="mb-0" style="font-size: 1.8rem; font-weight: 600;">➕ Add New Contract</h4>
+    </div>
+
+    <div class="card-body p-4">
+      <form [formGroup]="contractForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <!-- Insurance Type -->
+          <div class="col-md-6 mb-4">
+            <label for="insurance_type" class="form-label text-dark fw-semibold">Insurance Type</label>
+            <select id="insurance_type" formControlName="insurrance_type" class="form-select rounded-pill shadow-sm px-3">
+              <option value="">-- Select --</option>
+              <option value="Life_Insurance">Life Insurance</option>
+              <option value="Non_lifeinsurance">Non-Life Insurance</option>
+            </select>
+            <div *ngIf="contractForm.get('insurrance_type')?.invalid && contractForm.get('insurrance_type')?.touched"
+                 class="text-danger small">Insurance type is required.</div>
+          </div>
+
+          <!-- Insured Age -->
+          <div class="col-md-6 mb-4">
+            <label for="insuredAge" class="form-label text-dark fw-semibold">Insured Age</label>
+            <input type="number" id="insuredAge" class="form-control rounded-pill shadow-sm px-3"
+                   formControlName="insuredAge" placeholder="Enter insured age">
+            <div *ngIf="contractForm.get('insuredAge')?.invalid && contractForm.get('insuredAge')?.touched"
+                 class="text-danger small">Age must be between 10 and 100.</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Category -->
+          <div class="col-md-6 mb-4">
+            <label for="category_contract" class="form-label text-dark fw-semibold">Contract Category</label>
+            <select id="category_contract" formControlName="category_contract" class="form-select rounded-pill shadow-sm px-3">
+              <option value="">-- Select Category --</option>
+              <option value="Standard">Business</option>
+              <option value="Premium">Employee</option>
+              <option value="Gold">Worker</option>
+            </select>
+            <div *ngIf="contractForm.get('category_contract')?.invalid && contractForm.get('category_contract')?.touched"
+                 class="text-danger small">Category is required.</div>
+          </div>
+
+          <!-- Monthly Price -->
+          <div class="col-md-6 mb-4">
+            <label for="monthly_price" class="form-label text-dark fw-semibold">Monthly Price (DT)</label>
+            <input type="number" id="monthly_price" class="form-control rounded-pill shadow-sm px-3"
+                   formControlName="monthly_price" placeholder="Enter monthly price">
+            <div *ngIf="contractForm.get('monthly_price')?.invalid && contractForm.get('monthly_price')?.touched"
+                 class="text-danger small">Valid price is required.</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Start Date -->
+          <div class="col-md-6 mb-4">
+            <label for="policy_inception_date" class="form-label text-dark fw-semibold">Start Date</label>
+            <input type="date" id="policy_inception_date" class="form-control rounded-pill shadow-sm px-3"
+                   formControlName="policy_inception_date">
+            <div *ngIf="contractForm.get('policy_inception_date')?.invalid && contractForm.get('policy_inception_date')?.touched"
+                 class="text-danger small">Start date is required.</div>
+          </div>
+
+          <!-- End Date -->
+          <div class="col-md-6 mb-4">
+            <label for="expiration_date" class="form-label text-dark fw-semibold">End Date</label>
+            <input type="date" id="expiration_date" class="form-control rounded-pill shadow-sm px-3"
+                   formControlName="expiration_date">
+            <div *ngIf="contractForm.get('expiration_date')?.invalid && contractForm.get('expiration_date')?.touched"
+                 class="text-danger small">End date is required.</div>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="mb-4">
+          <label for="status" class="form-label text-dark fw-semibold">Contract Status</label>
+          <input type="text" id="status" class="form-control rounded-pill shadow-sm px-3"
+                 formControlName="status" placeholder="Enter contract status">
+          <div *ngIf="contractForm.get('status')?.invalid && contractForm.get('status')?.touched"
+               class="text-danger small">Status is required.</div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between mt-4">
+          <button type="submit" class="btn btn-success px-4 rounded-pill" [disabled]="contractForm.invalid">✅ Add</button>
+          <button type="button" class="btn btn-outline-danger px-4 rounded-pill" (click)="contractForm.reset()">❌ Reset</button>
+        </div>
+      </form>
+
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 🌐 Fenêtre modale pour édition -->
+<div class="modal-backdrop" *ngIf="selectedContract" (click)="closeModal()"></div>
+<div class="modal-edit-form" *ngIf="selectedContract">
+  <div class="modal-header">
+    <h5>✏️ Modifier le contrat</h5>
+    <button class="close-btn" (click)="closeModal()">✖️</button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="saveEdit()" #editForm="ngForm">
+      <div class="form-group">
+        <label>Type d'assurance</label>
+        <input [(ngModel)]="selectedContract.insurrance_type" name="type" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>Âge assuré</label>
+        <input type="number" [(ngModel)]="selectedContract.insuredAge" name="age" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>Catégorie</label>
+        <input [(ngModel)]="selectedContract.category_contract" name="category" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>Prix mensuel</label>
+        <input type="number" [(ngModel)]="selectedContract.monthly_price" name="monthly_price" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>Date de début</label>
+        <input type="date" [(ngModel)]="selectedContract.Policy_inception_date" name="start" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>Date d'expiration</label>
+        <input type="date" [(ngModel)]="selectedContract.expiration_date" name="end" class="form-control" required>
+      </div>
+
+      <button type="submit" class="btn btn-success mt-3">💾 Sauvegarder</button>
+    </form>
+  </div>
+</div>
+

@@ -1,0 +1,33 @@
+/* Card Styling */
+.card {
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+/* Input Styling */
+.form-control, .form-select {
+  border-radius: 10px;
+  padding: 10px;
+}
+
+button:disabled {
+  background-color: #c7c7c7;
+  cursor: not-allowed;
+}
+
+/* Error Styling */
+.text-danger {
+  font-size: 0.875rem;
+}
+
+/* Adjust button size */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+}
