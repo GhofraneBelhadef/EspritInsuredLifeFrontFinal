@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './component/Client/User/login/login.component';
 import { FullComponent } from './layouts/full/full.component';
@@ -9,6 +9,7 @@ import { ResetpasswordComponent } from './component/Client/User/resetpassword/re
 import { UserProfileComponent } from './component/Client/User/user-profile/user-profile.component';
 import { QrLoginComponent } from './component/Client/User/qr-login/qr-login.component';
 import { UserListComponent } from './component/Admin/User/user-list/user-list.component';
+import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';  // layout pour admin
 
 
 export const Approutes: Routes = [
@@ -28,7 +29,6 @@ export const Approutes: Routes = [
     loadChildren: () =>
       import('./dashboardadmin/dashboardadmin.module').then(m => m.DashboardadminModule)
   },
-  
 
   
   {
@@ -53,12 +53,26 @@ export const Approutes: Routes = [
         path: 'user-profile',
         component: UserProfileComponent
       },
+      
+      
+      
+    ]
+    
+    
+  },
+  {
+    path: '',
+    component: AdminLayoutComponent,
+    children: [
+     
       { path: 'admin/users', component: UserListComponent },
       
       
     ]
     
+    
   },
+  
   { path: 'oauth2/redirect', component: OAuth2RedirectComponent }, // <-- Cette ligne doit être avant le wildcard '**'
   { path: 'forgot-password', component: ForgotpasswordComponent },
   
@@ -68,5 +82,6 @@ export const Approutes: Routes = [
     path: '**',
     redirectTo: 'login'
   }
+  
   
 ];

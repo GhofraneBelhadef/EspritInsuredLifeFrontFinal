@@ -1,18 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardadminComponent } from './dashboardadmin.component';
-import { FullComponent } from '../layouts/full/full.component'; // ton layout global
+import { AdminLayoutComponent } from '../layout/admin-layout/admin-layout.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: FullComponent, // layout réutilisé
+    component: AdminLayoutComponent,   // ← ton layout admin
     children: [
-      {
-        path: '',
-        component: DashboardadminComponent
-      },
-      // ajoute d'autres routes admin ici si nécessaire
+      { path: '', component: DashboardadminComponent },
+      // autres sous-routes admin…
     ]
   }
 ];
