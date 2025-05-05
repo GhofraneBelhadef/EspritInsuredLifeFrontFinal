@@ -1,85 +1,117 @@
+<div class="container mt-5">
+  <!-- 🔹 Contract List -->
+  <h2 class="mb-4 text-primary">Contract List</h2>
+  <table class="table table-bordered table-hover">
+    <thead class="table-light">
+      <tr>
+        <th>Insurance Type</th>
+        <th>Insured Age</th>
+        <th>Category</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Monthly Price (€)</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let contract of contracts">
+        <td>{{ contract.insurrance_type }}</td>
+        <td>{{ contract.insuredAge }}</td>
+        <td>{{ contract.category_contract }}</td>
+        <td>{{ contract.Policy_inception_date | date }}</td>
+        <td>{{ contract.expiration_date | date }}</td>
+        <td>{{ contract.monthly_price }}</td>
+        <td>{{ contract.status }}</td>
+        <td>
+          <button class="btn btn-sm btn-primary me-2" (click)="editContract(contract)" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteContract(contract.contract_id!)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
+  <!-- 🔹 Add New Contract -->
+  <h2 class="mt-5 mb-3 text-success">Add New Contract</h2>
+  <form [formGroup]="contractForm" (ngSubmit)="onSubmit()" class="row g-3">
+    <div class="col-md-6">
+      <input type="text" class="form-control" formControlName="insurrance_type" placeholder="Insurance Type">
+    </div>
+    <div class="col-md-6">
+      <input type="number" class="form-control" formControlName="insuredAge" placeholder="Insured Age">
+    </div>
+    <div class="col-md-6">
+      <input type="text" class="form-control" formControlName="category_contract" placeholder="Contract Category">
+    </div>
+    <div class="col-md-6">
+      <input type="date" class="form-control" formControlName="policy_inception_date">
+    </div>
+    <div class="col-md-6">
+      <input type="date" class="form-control" formControlName="expiration_date">
+    </div>
+    <div class="col-md-6">
+      <input type="number" class="form-control" formControlName="monthly_price" placeholder="Monthly Price (€)">
+    </div>
+    <div class="col-md-6">
+      <select class="form-select" formControlName="status">
+        <option value="">Select Status</option>
+        <option value="EN_ATTENTE">Pending</option>
+        <option value="VALIDÉ">Validated</option>
+        <option value="ANNULÉ">Cancelled</option>
+      </select>
+    </div>
+    <div class="col-12 text-end">
+      <button type="submit" class="btn btn-success" [disabled]="contractForm.invalid">Add Contract</button>
+    </div>
+  </form>
 
-<nav style="background-color: #106861; color: white; padding: 0.5rem 1rem; border-bottom: 1px solid #145c36;" class="navbar navbar-expand-md">
-  <!-- ============================================================== -->
-  <!-- toggle and nav items -->
-  <!-- ============================================================== -->
-  <ul class="navbar-nav float-start me-auto">
-    <li class="nav-item">
-      <a class="nav-link waves-effect waves-dark" href="/admin/contracts" style="color: white;"> Contracts </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link waves-effect waves-dark" href="admin/contractAccounting"style="color: white;" > ContractAccounting </a>
-     
-    </li>
-    <li class="nav-item">
-      <a class="nav-link waves-effect waves-dark" href="admin/contractAccounting"style="color: white;" > ContractHolder </a>
-     
-    </li>
-    <li class="nav-item">
-      <a class="nav-link waves-effect waves-dark" href="admin/reporting"style="color: white;" > Reporting </a>
-     
-    </li>
-   
-  </ul>
-   <!-- ============================================================== -->
-   <ul class="navbar-nav float-end">
-      <!-- ============================================================== -->
-      <!-- User profile and search -->
-      <!-- ============================================================== -->
-      <li class="nav-item" ngbDropdown placement="bottom-end">
-        <a
-          ngbDropdownToggle
-          class="nav-link waves-effect waves-dark pro-pic"
-          href="javascript:void(0)"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          
-          <span class="ms-2" style="color: white;">Login</span>
-        </a>
-        <div class="dropdown-menu-right" ngbDropdownMenu>
-          <a class="dropdown-item" href="javascript:void(0)"> My Profile</a>
-          <a class="dropdown-item" href="javascript:void(0)"> My Balance</a>
-          <a class="dropdown-item" href="javascript:void(0)"> Inbox</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="javascript:void(0)"> Account Setting</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="javascript:void(0)"> Logout</a>
-        </div>
-      </li>
-      <!-- ============================================================== -->
-      <!-- User profile and search -->
-      <!-- ============================================================== -->
-    </ul>
-</nav>
+  <!-- 🔹 Edit Contract Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form (ngSubmit)="saveEdit()">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Edit Contract</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body" *ngIf="selectedContract">
+            <div class="mb-3">
+              <input type="text" class="form-control" [(ngModel)]="selectedContract.insurrance_type" name="editType" placeholder="Insurance Type">
+            </div>
+            <div class="mb-3">
+              <input type="number" class="form-control" [(ngModel)]="selectedContract.insuredAge" name="editAge" placeholder="Insured Age">
+            </div>
+            <div class="mb-3">
+              <input type="text" class="form-control" [(ngModel)]="selectedContract.category_contract" name="editCat" placeholder="Category">
+            </div>
+            <div class="mb-3">
+              <input type="date" class="form-control" [(ngModel)]="selectedContract.Policy_inception_date" name="editStart">
+            </div>
+            <div class="mb-3">
+              <input type="date" class="form-control" [(ngModel)]="selectedContract.expiration_date" name="editEnd">
+            </div>
+            <div class="mb-3">
+              <input type="number" class="form-control" [(ngModel)]="selectedContract.monthly_price" name="editPrice" placeholder="Monthly Price (€)">
+            </div>
+            <div class="mb-3">
+              <select class="form-select" [(ngModel)]="selectedContract.status" name="editStatus">
+                <option value="EN_ATTENTE">Pending</option>
+                <option value="VALIDÉ">Validated</option>
+                <option value="ANNULÉ">Cancelled</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
-<h2>📄 Liste des contrats</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Type</th>
-      <th>Âge</th>
-      <th>Catégorie</th>
-      <th>Prix</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let contract of contracts">
-      <td>{{ contract.contract_id }}</td>
-      <td>{{ contract.insurrance_type }}</td>
-      <td>{{ contract.insuredAge }}</td>
-      <td>{{ contract.category_contract }}</td>
-      <td>{{ contract.monthly_price }} DT</td>
-      <td>{{ contract.status }}</td>
-      <td>
-        <button (click)="deleteContract(contract.contract_id!)">Supprimer</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <!-- 🔹 Error message -->
+  <div *ngIf="errorMessage" class="alert alert-danger mt-4">
+    {{ errorMessage }}
+  </div>
+</div>
