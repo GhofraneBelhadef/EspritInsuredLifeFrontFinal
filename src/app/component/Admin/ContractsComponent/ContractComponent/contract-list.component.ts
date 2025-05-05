@@ -29,7 +29,7 @@ export class ContractListComponent implements OnInit {
       insurrance_type: ['', Validators.required],
       insuredAge: [null, [Validators.required, Validators.min(10), Validators.max(100)]],
       category_contract: ['', Validators.required],
-      policy_inception_date: ['', Validators.required],
+      Policy_inception_date: ['', Validators.required],
       expiration_date: ['', Validators.required],
       monthly_price: [null, [Validators.required, Validators.min(0.01)]],
       status: ['', Validators.required],
@@ -47,7 +47,7 @@ export class ContractListComponent implements OnInit {
     const formValue = this.contractForm.value;
     const payload = {
       ...formValue,
-      policy_inception_date: new Date(formValue.policy_inception_date).toISOString(),
+      Policy_inception_date: new Date(formValue.Policy_inception_date).toISOString(),
       expiration_date: new Date(formValue.expiration_date).toISOString(),
       insuredAge: Number(formValue.insuredAge),
       monthly_price: parseFloat(formValue.monthly_price),
