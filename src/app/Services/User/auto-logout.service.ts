@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AutoLogoutService {
-  timeoutInMs: number = 5 * 60 * 1000; // 15 minutes
+  timeoutInMs: number = 10 * 60 * 1000; // 15 minutes
   warningTimeInMs: number = 1 * 60 * 1000; // 1 minute avant logout
   timeout: any;
   warningTimeout: any;

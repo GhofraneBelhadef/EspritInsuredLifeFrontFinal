@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:9090/api/auth/login';
+  private apiUrl = 'http://localhost:8080/api/auth/login';
 
   constructor(private http: HttpClient) {}
 
@@ -41,17 +41,17 @@ export class AuthService {
     }
   }
   forgotPassword(email: string): Observable<any> {
-    const url = `http://localhost:9090/api/auth/forgot-password?email=${encodeURIComponent(email)}`;
+    const url = `http://localhost:8080/api/auth/forgot-password?email=${encodeURIComponent(email)}`;
     return this.http.post(url, {}); // Post sans body, juste pour respecter Swagger
   }
   resetPassword(token: string, newPassword: string): Observable<any> {
-    const url = `http://localhost:9090/api/auth/reset-password?token=${encodeURIComponent(token)}&newPassword=${encodeURIComponent(newPassword)}`;
+    const url = `http://localhost:8080/api/auth/reset-password?token=${encodeURIComponent(token)}&newPassword=${encodeURIComponent(newPassword)}`;
     return this.http.post(url, {}); // 👈 POST sans body
   }
   getUserProfile() {
     const token = this.getToken();
     console.log('TOKEN:', token); // <-- Ajoute ceci
-    return this.http.get('http://localhost:9090/api/users/profile', {
+    return this.http.get('http://localhost:8080/api/users/profile', {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -63,7 +63,7 @@ export class AuthService {
       'Authorization': `Bearer ${token}`
     };
   
-    return this.http.delete('http://localhost:9090/api/users/' + id, { headers, responseType: 'text' });
+    return this.http.delete('http://localhost:8080/api/users/' + id, { headers, responseType: 'text' });
   }
   updateUser(id: number, data: any): Observable<any> {
     const token = this.getToken(); // Récupère le token JWT
@@ -71,11 +71,11 @@ export class AuthService {
       'Authorization': `Bearer ${token}`
     };
   
-    return this.http.put(`http://localhost:9090/api/users/${id}`, data, { headers });
+    return this.http.put(`http://localhost:8080/api/users/${id}`, data, { headers });
   }
   updatePhoto(id: number, formData: FormData): Observable<any> {
     const token = this.getToken();
-    return this.http.put(`http://localhost:9090/api/users/${id}/photo`, formData, {
+    return this.http.put(`http://localhost:8080/api/users/${id}/photo`, formData, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -87,7 +87,7 @@ export class AuthService {
       'Authorization': `Bearer ${token}`  // Ajoute le token dans les en-têtes
     };
   
-    return this.http.get<any>(`http://localhost:9090/api/users?page=${page}&size=${size}`, { headers });
+    return this.http.get<any>(`http://localhost:8080/api/users?page=${page}&size=${size}`, { headers });
   }
   deleteUser(id: number) {
     const token = this.getToken(); // Récupère le token
@@ -95,11 +95,11 @@ export class AuthService {
       'Authorization': `Bearer ${token}`
     };
   
-    return this.http.delete('http://localhost:9090/api/users/' + id, { headers, responseType: 'text' });
+    return this.http.delete('http://localhost:8080/api/users/' + id, { headers, responseType: 'text' });
   }
   searchUsers(query: string, page: number, size: number) {
     const token = localStorage.getItem('token');
-    return this.http.get<any>(`http://localhost:9090/api/users/search?username=${query}&page=${page}&size=${size}`, {
+    return this.http.get<any>(`http://localhost:8080/api/users/search?username=${query}&page=${page}&size=${size}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

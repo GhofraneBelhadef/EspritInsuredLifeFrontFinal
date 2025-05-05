@@ -2,7 +2,7 @@ import { RouteInfo } from '../sidebar/sidebar.metadata';
 
 export const ROUTES_ADMIN: RouteInfo[] = [
   {
-    path: '/component/alert',
+    path: '/admin/RiskAdminComponent',
     title: 'Risk Management',
     icon: 'bi bi-people',
     class: '',
@@ -10,7 +10,7 @@ export const ROUTES_ADMIN: RouteInfo[] = [
     submenu: []
   },
   {
-    path: '/component/badges',
+    path: '/component/RiskAdminComponent',
     title: 'Loan Management',
     icon: 'bi bi-bar-chart',
     class: '',

@@ -10,6 +10,7 @@ import { UserProfileComponent } from './component/Client/User/user-profile/user-
 import { QrLoginComponent } from './component/Client/User/qr-login/qr-login.component';
 import { UserListComponent } from './component/Admin/User/user-list/user-list.component';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';  // layout pour admin
+import { RiskAdminComponent } from './component/Admin/User/user-list/RiskManagement/RiskAdmin.Component';
 
 
 export const Approutes: Routes = [
@@ -66,12 +67,12 @@ export const Approutes: Routes = [
     children: [
      
       { path: 'admin/users', component: UserListComponent },
-      
-      
+   { path: 'admin/RiskAdminComponent', component: RiskAdminComponent}
     ]
     
     
   },
+
   
   { path: 'oauth2/redirect', component: OAuth2RedirectComponent }, // <-- Cette ligne doit être avant le wildcard '**'
   { path: 'forgot-password', component: ForgotpasswordComponent },

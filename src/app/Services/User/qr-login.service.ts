@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class QrLoginService {
-  private apiUrl = 'http://localhost:9090/api/auth'; // ajuste le chemin si besoin
+  private apiUrl = 'http://localhost:8080/api/auth'; // ajuste le chemin si besoin
 
   constructor(private http: HttpClient) {}
 
