@@ -1,0 +1,226 @@
+<nav style="background-color: #106861; color: white; padding: 0.5rem 1rem; border-bottom: 1px solid #145c36;" class="navbar navbar-expand-md">
+  <!-- ============================================================== -->
+  <!-- toggle and nav items -->
+  <!-- ============================================================== -->
+  <ul class="navbar-nav float-start me-auto">
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" href="/admin/contracts" style="color: white;"> Contracts </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" href="admin/contractAccounting"style="color: white;" > ContractAccounting </a>
+     
+    </li>
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" href="admin/reporting"style="color: white;" > Reporting </a>
+     
+    </li>
+   
+  </ul>
+  <!-- ============================================================== -->
+  <!-- Right side toggle and nav items -->
+  <!-- ============================================================== -->
+  <ul class="navbar-nav float-end">
+    <!-- ============================================================== -->
+    <!-- User profile and search -->
+    <!-- ============================================================== -->
+    <li class="nav-item" ngbDropdown placement="bottom-end">
+  
+      <div class="dropdown-menu-right" ngbDropdownMenu>
+        <a class="dropdown-item" href="javascript:void(0)"> My Profile</a>
+        <a class="dropdown-item" href="javascript:void(0)"> My Balance</a>
+        <a class="dropdown-item" href="javascript:void(0)"> Inbox</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="javascript:void(0)"> Account Setting</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="javascript:void(0)"> Logout</a>
+      </div>
+    </li>
+    <!-- ============================================================== -->
+    <!-- User profile and search -->
+    <!-- ============================================================== -->
+  </ul>
+  </nav>
+  
+  <div class="container py-5 d-flex justify-content-center align-items-center min-vh-100">
+    <div class="w-100 bg-white p-4 shadow-lg rounded-4" style="max-width: 1200px; animation: fadeInUp 0.6s ease;">
+      <h2 class="text-center mb-4 fw-bold text-success">🌟 Contract Accounts List</h2>
+  
+      <div class="table-responsive">
+        <table class="table table-hover align-middle text-center table-bordered">
+          <thead class="table-success text-uppercase text-white" style="background-color:#28cb5f">
+            <tr>
+              <th>ID</th>
+              <th>Tax ID</th>
+              <th>Total Capital</th>
+              <th>Paid Indemnities</th>
+              <th>Total Provisions</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-light">
+            <tr *ngFor="let accounting of contractAccountings">
+              <td>{{ accounting?.contract_accounting_id || '-' }}</td>
+              <td>{{ accounting?.matriculeFiscale || '-' }}</td>
+              <td>{{ accounting?.total_capital != null ? (accounting.total_capital | number:'1.2-2') : '0.00' }}</td>
+              <td>{{ accounting?.indemnites_versees != null ? (accounting.indemnites_versees | number:'1.2-2') : '0.00' }}</td>
+              <td>{{ accounting?.totalProvisions != null ? (accounting.totalProvisions | number:'1.2-2') : '0.00' }}</td>
+              <td>{{ accounting?.created_at ? (accounting.created_at | date:'short') : '-' }}</td>
+              <td>{{ accounting?.updated_at ? (accounting.updated_at | date:'short') : '-' }}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary me-2 btn-green-hover"
+                (click)="editAccounting(accounting)">
+                 ✏️ Edit
+               </button>
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteAccounting(accounting.contract_accounting_id)">
+                  🗑️ Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container mt-5">
+    <div class="card shadow rounded-4 border-0" style="background-color: #f8f9fa;">
+      <div class="card-header text-center text-white rounded-top-4 py-3" style="background-color: #28cb5f;">
+        <h4 class="mb-0" style="font-size: 1.8rem; font-weight: 600;">Add Contract Account</h4>
+      </div>
+  
+      <div class="card-body p-4">
+        <form (ngSubmit)="addAccounting()" #accountingForm="ngForm">
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <label class="form-label text-dark fw-semibold">Created At</label>
+              <input type="date" name="created_at" class="form-control rounded-pill shadow-sm px-3"
+                     [(ngModel)]="newAccounting.created_at" required />
+            </div>
+            <div class="col-md-6 mb-4">
+              <label class="form-label text-dark fw-semibold">Updated At</label>
+              <input type="date" name="updated_at" class="form-control rounded-pill shadow-sm px-3"
+                     [(ngModel)]="newAccounting.updated_at" required />
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <label class="form-label text-dark fw-semibold">Tax ID</label>
+              <input type="text" name="matriculeFiscale" class="form-control rounded-pill shadow-sm px-3"
+                     placeholder="Enter tax ID"
+                     [(ngModel)]="newAccounting.matriculeFiscale" required />
+            </div>
+            <div class="col-md-6 mb-4">
+              <label class="form-label text-dark fw-semibold">Total Capital</label>
+              <input type="number" step="0.01" name="totalCapital" class="form-control rounded-pill shadow-sm px-3"
+                     placeholder="0.00"
+                     [(ngModel)]="newAccounting.total_capital" required />
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <label class="form-label text-dark fw-semibold">Paid Indemnities</label>
+              <input type="number" step="0.01" name="indemnitesVersees" class="form-control rounded-pill shadow-sm px-3"
+                     placeholder="0.00"
+                     [(ngModel)]="newAccounting.indemnites_versees" />
+            </div>
+            <div class="col-md-6 mb-4">
+              <label class="form-label text-dark fw-semibold">Total Provisions</label>
+              <input type="number" step="0.01" name="totalProvisions" class="form-control rounded-pill shadow-sm px-3"
+                     placeholder="0.00"
+                     [(ngModel)]="newAccounting.totalProvisions" />
+            </div>
+          </div>
+  
+          <div class="text-center mt-4">
+            <button type="submit"
+                    class="btn text-white rounded-pill px-5 py-2 fw-bold shadow"
+                    [disabled]="!accountingForm.form.valid"
+                    style="background-color: #28cb5f;">
+              Add Account
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-5">
+    <div class="row g-4">
+      <!-- Loop on each accounting -->
+      <ng-container *ngFor="let accounting of contractAccountings">
+        <!-- Update Capital -->
+        <div class="col-md-4">
+          <div class="card text-center shadow-sm rounded-4 h-100 border-0" style="cursor: pointer;" (click)="updateCapital(accounting.matriculeFiscale)">
+            <div class="card-body p-4">
+              <img src="assets/images/capitale.png" alt="Capital" class="img-fluid mb-3" style="width: 60px; height: 60px; object-fit: contain;" />
+              <h6 class="fw-semibold mb-2">{{ accounting.matriculeFiscale }}</h6>
+              <button class="btn btn-outline-primary btn-sm rounded-pill px-4">Update Capital</button>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Update Indemnités -->
+        <div class="col-md-4">
+          <div class="card text-center shadow-sm rounded-4 h-100 border-0" style="cursor: pointer;" (click)="updateIndemnites(accounting.matriculeFiscale)">
+            <div class="card-body p-4">
+              <img src="assets/images/indemnite.png" alt="Indemnités" class="img-fluid mb-3" style="width: 60px; height: 60px; object-fit: contain;" />
+              <h6 class="fw-semibold mb-2">{{ accounting.matriculeFiscale }}</h6>
+              <button class="btn btn-outline-primary btn-sm rounded-pill px-4">Update Indemnités</button>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Calculer Bénéfice -->
+        <div class="col-md-4">
+          <div class="card text-center shadow-sm rounded-4 h-100 border-0">
+            <div class="card-body p-4">
+              <h5 class="card-title fw-semibold mb-3">{{ accounting.matriculeFiscale }}</h5>
+              <button class="btn btn-outline-warning btn-sm rounded-pill px-4" (click)="calculerBenefice(accounting.matriculeFiscale)">Calculate Bénéfice</button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+  
+      <!-- Bénéfice Total -->
+      <div class="col-md-4">
+        <div class="card text-center shadow-sm rounded-4 h-100 border-0" style="cursor: pointer;" (click)="calculerBeneficeTotal()">
+          <div class="card-body p-4">
+            <img src="assets/images/benefice.jpg" alt="Total" class="img-fluid mb-3" style="width: 60px; height: 60px; object-fit: contain;" />
+            <button class="btn btn-success btn-sm rounded-pill px-4">Calculate Total Bénéfice</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 🌐 Fenêtre modale pour édition -->
+<div class="modal-backdrop" *ngIf="selectedAccounting" (click)="closeModal()"></div>
+<div class="modal-edit-form" *ngIf="selectedAccounting">
+  <div class="modal-header">
+    <h5>Modifier le compte</h5>
+    <button class="close-btn" (click)="closeModal()">✖️</button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="saveEdit()" #editForm="ngForm">
+      <div class="form-group">
+        <label>Matricule fiscale</label>
+        <input [(ngModel)]="selectedAccounting.matriculeFiscale" name="matricule" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>Total capital</label>
+        <input [(ngModel)]="selectedAccounting.total_capital" name="capital" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>Indemnités versées</label>
+        <input [(ngModel)]="selectedAccounting.indemnites_versees" name="indemnites" class="form-control" required>
+      </div>
+
+      <button type="submit" class="btn btn-success mt-3">💾 Sauvegarder</button>
+    </form>
+  </div>
+</div>
+
+  
+

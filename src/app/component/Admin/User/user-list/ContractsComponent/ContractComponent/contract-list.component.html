@@ -1,0 +1,138 @@
+<nav style="background-color: #106861; color: white; padding: 0.5rem 1rem; border-bottom: 1px solid #145c36;" class="navbar navbar-expand-md">
+  <ul class="navbar-nav float-start me-auto">
+    <li class="nav-item"><a class="nav-link waves-effect waves-dark" href="/admin/contracts" style="color: white;">Contracts</a></li>
+    <li class="nav-item"><a class="nav-link waves-effect waves-dark" href="admin/contractAccounting" style="color: white;">ContractAccounting</a></li>
+    <li class="nav-item"><a class="nav-link waves-effect waves-dark" href="admin/reporting" style="color: white;">Reporting</a></li>
+  </ul>
+  <ul class="navbar-nav float-end">
+    <li class="nav-item" ngbDropdown placement="bottom-end">
+      <div class="dropdown-menu-right" ngbDropdownMenu>
+        <a class="dropdown-item" href="#">My Profile</a>
+        <a class="dropdown-item" href="#">My Balance</a>
+        <a class="dropdown-item" href="#">Inbox</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Account Setting</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Logout</a>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+<div class="container py-5 d-flex justify-content-center align-items-center min-vh-100">
+  <div class="w-100 bg-white p-4 shadow-lg rounded-4" style="max-width: 1200px; animation: fadeInUp 0.6s ease;">
+    <h2 class="text-center mb-4 fw-bold text-success">📄 Contract List</h2>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle text-center table-bordered">
+        <thead class="table-success text-uppercase text-white" style="background-color:#28cb5f">
+          <tr>
+            <th>Insurance Type</th>
+            <th>Insured Age</th>
+            <th>Category</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Monthly Price (Dt)</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let contract of contracts">
+            <td>{{ contract.insurrance_type }}</td>
+            <td>{{ contract.insuredAge }}</td>
+            <td>{{ contract.category_contract }}</td>
+            <td>{{ contract.Policy_inception_date | date }}</td>
+            <td>{{ contract.expiration_date | date }}</td>
+            <td>{{ contract.monthly_price }}</td>
+            <td>{{ contract.status }}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="editContract(contract)" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteContract(contract.contract_id!)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="container mt-5">
+      <div class="card shadow rounded-4 border-0" style="background-color: #f8f9fa;">
+        <div class="card-header text-center text-white rounded-top-4 py-3" style="background-color: #28cb5f;">
+          <h4 class="mb-0" style="font-size: 1.8rem; font-weight: 600;">Add Contract</h4>
+        </div>
+    
+        <div class="card-body p-4">
+          <form [formGroup]="contractForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-dark fw-semibold">Insurance Type</label>
+                <select class="form-select rounded-pill shadow-sm px-3" formControlName="insurrance_type" required>
+                  <option value="">Select Insurance Type</option>
+                  <option value="Life_Insurance">Life Insurance</option>
+                  <option value="Non_lifeinsurance">Non-Life Insurance</option>
+                </select>
+              </div>
+    
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-dark fw-semibold">Insured Age</label>
+                <input type="number" class="form-control rounded-pill shadow-sm px-3"
+                       formControlName="insuredAge" placeholder="e.g. 35" required>
+              </div>
+            </div>
+    
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-dark fw-semibold">Category</label>
+                <select class="form-select rounded-pill shadow-sm px-3" formControlName="category_contract" required>
+                  <option value="">Select Category</option>
+                  <option value="Employee">Employee</option>
+                  <option value="Worker">Worker</option>
+                  <option value="Business">Business</option>
+                </select>
+              </div>
+    
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-dark fw-semibold">Status</label>
+                <select class="form-select rounded-pill shadow-sm px-3" formControlName="status" required>
+                  <option value="">Select Status</option>
+                  <option value="Active">Active</option>
+                  <option value="Expired">Expired</option>
+                  <option value="Resillied">Resillied</option>
+                </select>
+              </div>
+            </div>
+    
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-dark fw-semibold">Policy Start Date</label>
+                <input type="date" class="form-control rounded-pill shadow-sm px-3"
+                       formControlName="Policy_inception_date" required>
+              </div>
+    
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-dark fw-semibold">Policy End Date</label>
+                <input type="date" class="form-control rounded-pill shadow-sm px-3"
+                       formControlName="expiration_date" required>
+              </div>
+            </div>
+    
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-dark fw-semibold">Monthly Price (Dt)</label>
+                <input type="number" class="form-control rounded-pill shadow-sm px-3"
+                       formControlName="monthly_price" placeholder="0.00" required>
+              </div>
+            </div>
+    
+            <div class="text-center mt-4">
+              <button type="submit"
+                      class="btn text-white rounded-pill px-5 py-2 fw-bold shadow"
+                      [disabled]="contractForm.invalid"
+                      style="background-color: #28cb5f;">
+                ➕ Add Contract
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    

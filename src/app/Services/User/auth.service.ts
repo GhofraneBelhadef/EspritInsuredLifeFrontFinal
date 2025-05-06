@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -23,7 +22,18 @@ export class AuthService {
   getToken() {
     return localStorage.getItem('token');
   }
-
+  getUserId(): number | null {
+    const token = this.getToken();
+    if (!token) return null;
+    
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload?.id || null; // Assurez-vous que votre token JWT contient l'ID utilisateur
+    } catch (e) {
+      console.error('Erreur lors du décodage du token', e);
+      return null;
+    }
+  }
   logout() {
     localStorage.removeItem('token');
   }

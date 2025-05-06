@@ -18,7 +18,7 @@ export const ROUTES_ADMIN: RouteInfo[] = [
     submenu: []
   },
   {
-    path: '/dashboardadmin/parametres',
+    path: '/admin/reporting',
     title: 'Contract Manegement',
     icon: 'bi bi-gear',
     class: '',

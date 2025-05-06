@@ -1,0 +1,121 @@
+<nav style="background-color: #106861; color: white; padding: 0.5rem 1rem; border-bottom: 1px solid #145c36;" class="navbar navbar-expand-md">
+  <ul class="navbar-nav me-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/contracts" style="color: white;">Contracts</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/contractAccounting" style="color: white;">Accounting</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/reporting" style="color: white;">Reporting</a>
+    </li>
+  </ul>
+
+  <ul class="navbar-nav ms-auto">
+    <li class="nav-item dropdown">
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="#">My Profile</a></li>
+        <li><a class="dropdown-item" href="#">My Balance</a></li>
+        <li><a class="dropdown-item" href="#">Inbox</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Account Settings</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Logout</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+<p class="mb-4">📊 Reporting Dashboard</p>
+
+<div class="container mt-5">
+  <div class="row g-4">
+
+    <!-- Total Contracts -->
+    <div class="col-md-6" *ngIf="totalContracts !== undefined">
+      <div class="card text-white bg-primary text-center shadow-lg rounded-4 h-100">
+        <div class="card-body py-4">
+          <div class="mb-3 fs-1">📄</div>
+          <h5 class="card-title fs-4">Total Number of Contracts</h5>
+          <p class="card-text fs-2">{{ totalContracts }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Capital -->
+    <div class="col-md-6" *ngIf="totalCapital !== undefined">
+      <div class="card text-white bg-success text-center shadow-lg rounded-4 h-100">
+        <div class="card-body py-4">
+          <div class="mb-3 fs-1">💰</div>
+          <h5 class="card-title fs-4">Total Capital</h5>
+          <p class="card-text fs-2">{{ totalCapital | number:'1.2-2' }} TND</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Provisions -->
+    <div class="col-md-6" *ngIf="totalProvisions !== undefined">
+      <div class="card text-white bg-warning text-center shadow-lg rounded-4 h-100">
+        <div class="card-body py-4">
+          <div class="mb-3 fs-1">📦</div>
+          <h5 class="card-title fs-4">Total Provisions</h5>
+          <p class="card-text fs-2">{{ totalProvisions | number:'1.2-2' }} TND</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Average Sinistrality -->
+    <div class="col-md-6" *ngIf="averageSinistralite !== undefined">
+      <div class="card text-white bg-danger text-center shadow-lg rounded-4 h-100">
+        <div class="card-body py-4">
+          <div class="mb-3 fs-1">📈</div>
+          <h5 class="card-title fs-4">Average Claim Rate</h5>
+          <p class="card-text fs-2">{{ averageSinistralite | percent:'1.1-1' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pie Chart & Distribution -->
+    <div class="col-md-12" *ngIf="contractTypeDistribution">
+      <div class="card shadow-lg rounded-4 h-100">
+        <div class="card-body py-5">
+          <h5 class="card-title fs-4 text-center mb-4">🧩 Contract Type Distribution</h5>
+
+          <div class="mb-3 text-center">
+            <div *ngFor="let type of contractTypeDistribution | keyvalue" class="small">
+              <strong>{{ type.key }}</strong> : {{ type.value }}
+            </div>
+          </div>
+
+          <div style="display: block; width: 100%; height: 350px;">
+            <canvas baseChart
+                    [data]="pieChartData"
+                    [options]="pieChartOptions"
+                    [type]="pieChartType">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Line Chart -->
+  <div class="container mt-5">
+    <div class="card shadow-lg rounded-4 p-4">
+      <h5 class="text-center mb-4">📈 Insurance Evolution Comparison (2024 vs 2025)</h5>
+      <canvas baseChart
+              [data]="lineChartData"
+              [options]="lineChartOptions"
+              [type]="lineChartType"
+              [plugins]="[zoomPlugin]">
+      </canvas>
+    </div>
+  </div>
+
+  <!-- Download Button -->
+  <div class="text-center mt-5">
+    <button class="btn btn-primary btn-lg rounded-pill shadow-lg" (click)="downloadReport()">
+      📥 Download Excel Report
+    </button>
+  </div>
+</div>

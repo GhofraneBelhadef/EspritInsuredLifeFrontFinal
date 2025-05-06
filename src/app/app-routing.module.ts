@@ -11,7 +11,12 @@ import { QrLoginComponent } from './component/Client/User/qr-login/qr-login.comp
 import { UserListComponent } from './component/Admin/User/user-list/user-list.component';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';  // layout pour admin
 import { RiskAdminComponent } from './component/Admin/User/user-list/RiskManagement/RiskAdmin.Component';
+import { ContractRequestComponent } from './component/Client/ContractManagement/contract-request/contract-request.component';
+import { ContractDetailsComponent } from './component/Client/ContractManagement/contract-details/contract-details.component';
+import { ContractListComponent } from './component/Admin/User/user-list/ContractsComponent/ContractComponent/contract-list.component';
 
+import { ContractAccountingListComponent } from './component/Admin/User/user-list/ContractsComponent/ContractAcountingComponent/contractaccounting-list';
+import { ReportingComponent } from './component/Admin/User/user-list/ContractsComponent/reporting/reporting.component';
 
 export const Approutes: Routes = [
   {
@@ -67,10 +72,24 @@ export const Approutes: Routes = [
     children: [
      
       { path: 'admin/users', component: UserListComponent },
-   { path: 'admin/RiskAdminComponent', component: RiskAdminComponent}
+   { path: 'admin/RiskAdminComponent', component: RiskAdminComponent},
+   { path: 'request-contract', component: ContractRequestComponent },
+      { path: 'contract-details/:contractType', component: ContractDetailsComponent },
+      {
+        path: 'admin/contractAccounting',
+        component: ContractAccountingListComponent
+       
+      },
+      { path: '', component: ContractListComponent },
+      { path: 'admin/reporting', component: ReportingComponent },
+      {
+        path: 'admin/contracts',
+        children: [
+          { path: '', component: ContractListComponent },
+        
+        ]
+      },
     ]
-    
-    
   },
 
   

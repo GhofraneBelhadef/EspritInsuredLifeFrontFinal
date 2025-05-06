@@ -8,7 +8,7 @@ import { ComponentsRoutes } from './component.routing';
 import { RiskManagementComponent } from './Client/RiskManagement/RiskManagement.component';
 import { NgbdDropdownBasicComponent } from './Client/DonationManagement/donation.component';
 
-import { NgbdButtonsComponent } from './Client/ContractManagement/ContractManagement.component';
+import { ContractManagementComponent } from './Client/ContractManagement/ContractManagement.component';
 
 import { TableComponent } from "./Client/User/User.component";
 import { LoginComponent } from './Client/User/login/login.component';
@@ -30,7 +30,6 @@ import { UserListComponent } from './Admin/User/user-list/user-list.component';
     RiskManagementComponent,
     CardsComponent,
     NgbdDropdownBasicComponent,
-    NgbdButtonsComponent,
     TableComponent
   ],
   declarations: [
@@ -38,7 +37,6 @@ import { UserListComponent } from './Admin/User/user-list/user-list.component';
     SignupComponent,
     ForgotpasswordComponent,
     QrLoginComponent,
-    
     UserProfileComponent,
     OAuth2RedirectComponent,
     ResetpasswordComponent,

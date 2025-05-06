@@ -1,0 +1,45 @@
+<div class="container mt-5">
+  <div class="card shadow rounded-4 border-0" style="background-color: #f8f9fa;">
+    <div class="card-header text-center text-white rounded-top-4 py-3" style="background-color: #28cb5f;">
+      <h4 class="mb-0" style="font-size: 1.8rem; font-weight: 600;">Contract Request Form</h4>
+    </div>
+
+    <div class="card-body p-4">
+      <form [formGroup]="requestForm" (ngSubmit)="onSubmit()">
+
+        <div class="mb-4">
+          <label for="fullname" class="form-label text-dark fw-semibold">Full Name</label>
+          <input type="text" id="fullname" class="form-control rounded-pill shadow-sm px-3" placeholder="Enter your full name" formControlName="fullname" required>
+        </div>
+
+        <div class="mb-4">
+          <label for="email" class="form-label text-dark fw-semibold">Email Address</label>
+          <input type="email" id="email" class="form-control rounded-pill shadow-sm px-3" placeholder="Enter your email" formControlName="email" required>
+        </div>
+
+        <div class="mb-4">
+          <label for="phone" class="form-label text-dark fw-semibold">Phone Number</label>
+          <input type="text" id="phone" class="form-control rounded-pill shadow-sm px-3" placeholder="Enter your phone number" formControlName="phone" required>
+        </div>
+
+        <div class="mb-4">
+          <label for="contractType" class="form-label text-dark fw-semibold">Contract Type</label>
+          <select id="contractType" class="form-select rounded-pill shadow-sm px-3" formControlName="contractType" required>
+            <option value="" disabled selected>Select contract type</option>
+            <option value="Life_Insurance">Life Insurance</option>
+            <option value="Non_Life_Insurance">Non-Life Insurance</option>
+          </select>
+        </div>
+
+        <div class="text-center mt-4">
+          <button type="submit" class="btn text-white rounded-pill px-5 py-2 fw-bold shadow"
+                  [disabled]="requestForm.invalid"
+                  style="background-color: #28cb5f;">
+            Submit Request
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
