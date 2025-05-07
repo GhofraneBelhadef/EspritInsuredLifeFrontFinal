@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { Contract } from 'src/app/models/ContractModel/contract.model';
 import { ContractRequest } from 'src/app/models/ContractModel/contract-request.model';
 import { AuthService } from 'src/app/Services/User/auth.service';
@@ -53,10 +53,21 @@ export class ContractManagementService {
    * @param userId ID de l'utilisateur
    * @returns Résultat de la requête
    */
-  sendContractRequest(request: ContractRequest, userId: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/request/${userId}`, request);
-  }
+  // Corrigez l'URL pour matcher le endpoint backend
+sendContractRequest(request: ContractRequest): Observable<any> {
+  const token = this.authService.getToken();
+  
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  });
 
+  // Utilisez la même structure que votre backend
+  return this.http.post(`${this.baseUrl}/add`, request, { 
+    headers,
+    observe: 'response'
+  });
+}
   /**
    * 🔹 Annule un contrat par son ID
    * @param contractId ID du contrat

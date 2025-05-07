@@ -75,19 +75,39 @@ export class ContractManagementComponent implements OnInit {
 
   loadContracts(): void {
     this.isLoading = true;
-    this.contractService.getContractsByUserId(2).subscribe({
-      next: (data) => {
-        console.log('Données parsées:', data);
+    const userId = this.authService.getUserId();
+    
+    // Check if userId is null or undefined
+    if (userId === null || userId === undefined) {
+      console.error('User ID is null or undefined - cannot load contracts');
+      this.isLoading = false;
+      this.errorMessage = 'User not authenticated. Please log in again.';
+      this.clearMessagesAfterDelay();
+      return;
+    }
+  
+    console.log('Tentative de chargement pour user:', userId);
+    console.log('Token actuel:', this.authService.getToken());
+  
+    this.contractService.getContractsByUserId(userId).subscribe({
+      next: (data: any) => {
+        console.log('Réponse API réussie:', data);
         this.contracts = data;
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erreur complète:', error);
+        console.error('Erreur détaillée:', {
+          status: error.status,
+          message: error.message,
+          url: error.url,
+          error: error.error
+        });
         this.isLoading = false;
+        this.errorMessage = 'Failed to load contracts. Please try again later.';
+        this.clearMessagesAfterDelay();
       }
     });
   }
-
   updateChartData(data: any[]): void {
     const lifeCount = data.filter(
       (c) => c.insurrance_type === 'Life_Insurance'
@@ -161,6 +181,9 @@ export class ContractManagementComponent implements OnInit {
   }
 
   navigateToRequest(type: string): void {
+    // Ajoutez un log pour vérifier le token
+    console.log('Token during navigation:', this.authService.getToken());
+    
     this.router.navigate(['/request-contract'], {
       queryParams: { type },
     });

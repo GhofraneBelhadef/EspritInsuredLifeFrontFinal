@@ -23,14 +23,15 @@ export class ContractAdminService {
 
   // Ajouter un contrat
   addContract(contract: Contract): Observable<Contract> {
-    // Assurez-vous que le token d'authentification est disponible
-    const token = localStorage.getItem('authToken'); // Exemple avec le stockage local
-
-    // Si le token existe, ajoutez-le aux headers
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    // Formatage des dates en ISO string
+    const payload = {
+        ...contract,
+        Policy_inception_date: new Date(contract.Policy_inception_date).toISOString(),
+        expiration_date: new Date(contract.expiration_date).toISOString()
+    };
     
-    return this.http.post<Contract>(`${this.baseUrl}/add`, contract, { headers });
-  }
+    return this.http.post<Contract>(`${this.baseUrl}/add`, payload);
+}
 
   // Mettre à jour un contrat
   updateContract(id: number, contract: Contract): Observable<Contract> {
