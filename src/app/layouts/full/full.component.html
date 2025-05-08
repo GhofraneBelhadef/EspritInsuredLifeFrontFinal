@@ -15,7 +15,7 @@
   <!-- ============================================================== -->
   <!-- Topbar header - style you can find in topbar.scss -->
   <!-- ============================================================== -->
-  <header class="topbar" data-navbarbg="skin5">
+  <header *ngIf="!displayFront" class="topbar" data-navbarbg="skin5">
     <nav class="d-flex top-navbar navbar-expand-lg navbar-dark">
       <div
         class="navbar-header"
@@ -93,6 +93,7 @@
   <!-- Left Sidebar - style you can find in sidebar.scss  -->
   <!-- ============================================================== -->
   <aside
+  *ngIf="!displayFront" 
     class="left-sidebar"
     data-sidebarbg="skin6"
     (mouseover)="Logo()"
@@ -106,7 +107,7 @@
   <!-- ============================================================== -->
   <!-- Page wrapper  -->
   <!-- ============================================================== -->
-  <div class="page-wrapper">
+  <div [class.page-wrapper]="!displayFront">
     <!-- ============================================================== -->
     <!-- Container fluid  -->
     <!-- ============================================================== -->
@@ -125,7 +126,7 @@
     <!-- ============================================================== -->
     <!-- footer -->
     <!-- ============================================================== -->
-    <footer class="footer text-center">
+    <footer *ngIf="!displayFront"  class="footer text-center">
       All Rights Reserved by Elite Admin. Designed and Developed by
       <a href="https://www.wrappixel.com">WrapPixel</a>.
     </footer>

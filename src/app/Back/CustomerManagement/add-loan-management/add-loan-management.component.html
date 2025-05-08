@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100 custom-bg">
+  <div class="container p-4 rounded shadow custom-card">
+    <h2 class="text-center mb-4 custom-title">Loan Application</h2>
+
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+
+    <form [formGroup]="loanForm" (ngSubmit)="onSubmit()" class="row g-3">
+      <div class="col-12">
+        <label for="loanAmount" class="form-label">Loan Amount</label>
+        <input type="number" class="form-control" id="loanAmount" formControlName="loanAmount">
+      </div>
+      <div class="col-12">
+        <label for="loanTerm" class="form-label">Loan Term</label>
+        <input type="number" class="form-control" id="loanTerm" formControlName="loanTerm">
+      </div>
+      <div class="col-12">
+        <label for="coapplicantIncome" class="form-label">Coapplicant Income</label>
+        <input type="number" class="form-control" id="coapplicantIncome" formControlName="coapplicantIncome">
+      </div>
+
+      <div class="col-12 mt-4 d-flex justify-content-between">
+        <button type="submit" class="btn btn-primary custom-btn-green" [disabled]="!loanForm.valid">Add Loan</button>
+        <button type="button" class="btn btn-secondary custom-btn-lime" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,300 @@
+<div class="container-fluid modern-container">
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="modern-card">
+        <div class="card-body">
+          <h4 class="modern-title">Loan Analytics</h4>
+
+          <div *ngIf="isLoadingAnalytics" class="modern-loading">
+            <div class="modern-spinner"></div>
+            <span>Loading...</span>
+          </div>
+
+          <div>
+            <div *ngIf="!isLoadingAnalytics && analyticsData" class="row mb-4">
+              <div class="col-md-3">
+                <div class="modern-stat-card" style="border-left-color: #005380;">
+                  <div class="card-body text-center">
+                    <h6>Total Loans</h6>
+                    <h4>{{analyticsData.totalNumberOfLoans}}</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="modern-stat-card" style="border-left-color: #74c9e3;">
+                  <div class="card-body text-center">
+                    <h6>Total Amount</h6>
+                    <h4>{{analyticsData.totalLoanAmount | currency}}</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="modern-stat-card" style="border-left-color: #028844;">
+                  <div class="card-body text-center">
+                    <h6>Avg Amount</h6>
+                    <h4>{{analyticsData.averageLoanAmount | currency}}</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="modern-stat-card" style="border-left-color: #bbd143;">
+                  <div class="card-body text-center">
+                    <h6>Avg Interest</h6>
+                    <h4>{{analyticsData.averageInterestRate | number:'1.1-1'}}%</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modern-card">
+    <div class="row">
+      <!-- Vertical tabs column -->
+      <div class="col-md-2 d-flex justify-content-center align-items-center">
+        <div class="modern-nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <!-- All Loans -->
+          <label class="nav-link" [class.active]="currentStatusFilter === 'ALL'">
+            <input type="radio" name="loanStatus" [checked]="currentStatusFilter === 'ALL'" (click)="filterChartsByStatus('ALL')">
+            <span>All Loans</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#005380" viewBox="0 0 16 16">
+              <path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z"/>
+            </svg>
+          </label>
+      
+          <!-- Pending -->
+          <label class="nav-link" [class.active]="currentStatusFilter === 'PENDING'">
+            <input type="radio" name="loanStatus" [checked]="currentStatusFilter == 'PENDING'" (click)="filterChartsByStatus('PENDING')">
+            <span>Pending</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#74c9e3" viewBox="0 0 16 16">
+              <path d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2h-7zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48V8.35zm1 0v3.17c2.134.181 3 1.48 3 1.48a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351z"/>
+            </svg>
+          </label>
+      
+          <!-- Approved -->
+          <label class="nav-link" [class.active]="currentStatusFilter === 'APPROVED'">
+            <input type="radio" name="loanStatus" [checked]="currentStatusFilter === 'APPROVED'" (click)="filterChartsByStatus('APPROVED')">
+            <span>Approved</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#028844" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+            </svg>
+          </label>
+      
+          <!-- Rejected -->
+          <label class="nav-link" [class.active]="currentStatusFilter === 'REJECTED'">
+            <input type="radio" name="loanStatus" [checked]="currentStatusFilter === 'REJECTED'" (click)="filterChartsByStatus('REJECTED')">
+            <span>Rejected</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#bbd143" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+          </label>
+        </div>
+      </div>
+
+      <!-- Charts column -->
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="modern-card">
+              <div class="card-body">
+                <h5 class="modern-subtitle">Loan Distribution</h5>
+                <p class="modern-description">The Fund's objective is to provide a combination of growth and income and to keep the Fund within a pre-determined risk profile.</p>
+                <ul class="modern-tabs">
+                  <li class="nav-item">
+                    <a class="nav-link" [class.active]="currentChart == 'status'" (click)="showStatusChart()">Details</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" [class.active]="currentChart == 'terms'" (click)="showTermChart()">Terms</a>
+                  </li>
+                </ul>
+                <div>
+                  <!-- statusChart -->
+                  <div [class.d-none]="currentChart !== 'status'">
+                    <div class="modern-card">
+                      <div class="card-body">
+                        <div class="row align-items-center" style="height: 300px;">
+                          <div class="col-md-4">
+                            <h5 class="modern-subtitle">Loan Amount Chart</h5>
+                            <p class="modern-description">Average Value</p>
+                          </div>
+                          <div class="col-md-5" style="height: 300px;">
+                            <canvas #statusChart width="400" height="250"></canvas>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="d-flex flex-column">
+                              <div class="modern-legend-item">
+                                <div class="legend-color" style="background-color: #005380;"></div>
+                                <small>Loan Amount</small>
+                              </div>
+                              <div class="modern-legend-item">
+                                <div class="legend-color" style="background-color: #74c9e3;"></div>
+                                <small>Co Applicant Income</small>
+                              </div>
+                              <div class="modern-legend-item">
+                                <div class="legend-color" style="background-color: #028844;"></div>
+                                <small>Applicant Income</small>
+                              </div>
+                              <div class="modern-legend-item">
+                                <div class="legend-color" style="background-color: #bbd143;"></div>
+                                <small>Interest Rate</small>
+                              </div>
+                              <div class="modern-legend-item">
+                                <div class="legend-color" style="background-color: #74c9e3;"></div>
+                                <small>Total Loan Amount</small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div [class.d-none]="currentChart !== 'terms'" style="height: 300px">
+                    <div class="modern-card">
+                      <div class="card-body">
+                        <div class="row align-items-center" style="height: 300px;">
+                          <div class="col-md-8" style="height: 300px;">
+                            <canvas #termChart width="400" height="250"></canvas>
+                          </div>
+                          <div class="col-md-4">
+                            <h5 class="modern-subtitle">Loan Terms Chart</h5>
+                            <p class="modern-description">Current system status overview</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="modern-card">
+          <div class="card-body">
+            <div class="modern-table-header">
+              <h4 class="modern-title">Loan Management</h4>
+              <div class="modern-search">
+                <input #searchInput type="text" class="form-control" placeholder="Search loans..." (keyup)="applyFilter(searchInput.value)">
+                <button class="btn modern-search-btn">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="modern-table">
+                <thead>
+                  <tr>
+                    <th (click)="sort('idLoan')">
+                      ID
+                      <i class="fas fa-sort" [class.fa-sort-up]="sortDirection === 'asc' && sortColumn === 'idLoan'"
+                        [class.fa-sort-down]="sortDirection === 'desc' && sortColumn === 'idLoan'"></i>
+                    </th>
+                    <th (click)="sort('loanAmount')">
+                      Amount
+                      <i class="fas fa-sort" [class.fa-sort-up]="sortDirection === 'asc' && sortColumn === 'loanAmount'"
+                        [class.fa-sort-down]="sortDirection === 'desc' && sortColumn === 'loanAmount'"></i>
+                    </th>
+                    <th (click)="sort('interestRate')">
+                      Interest Rate
+                      <i class="fas fa-sort"
+                        [class.fa-sort-up]="sortDirection === 'asc' && sortColumn === 'interestRate'"
+                        [class.fa-sort-down]="sortDirection === 'desc' && sortColumn === 'interestRate'"></i>
+                    </th>
+                    <th (click)="sort('loanTerm')">
+                      Term
+                      <i class="fas fa-sort" [class.fa-sort-up]="sortDirection === 'asc' && sortColumn === 'loanTerm'"
+                        [class.fa-sort-down]="sortDirection === 'desc' && sortColumn === 'loanTerm'"></i>
+                    </th>
+                    <th (click)="sort('status')">
+                      Status
+                      <i class="fas fa-sort" [class.fa-sort-up]="sortDirection === 'asc' && sortColumn === 'status'"
+                        [class.fa-sort-down]="sortDirection === 'desc' && sortColumn === 'status'"></i>
+                    </th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let loan of filteredLoans">
+                    <td>{{loan.idLoan}}</td>
+                    <td>{{loan.loanAmount | currency}}</td>
+                    <td>{{loan.interestRate}}%</td>
+                    <td>{{loan.loanTerm}} months</td>
+                    <td>
+                      <span class="modern-badge" [ngClass]="{
+                        'approved': loan.status === 'APPROVED',
+                        'pending': loan.status === 'PENDING',
+                        'rejected': loan.status === 'REJECTED'
+                      }">
+                        {{loan.status}}
+                      </span>
+                    </td>
+                    <td>
+                      <button (click)="viewLoan(loan.idLoan)" class="btn modern-view-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                          <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                          <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                        </svg>
+                        View
+                      </button>
+
+                      <button (click)="deleteLoan(loan.idLoan)" class="btn modern-delete-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="filteredLoans.length === 0">
+                    <td colspan="6" class="text-center modern-empty-message">No loans found</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="modern-pagination" *ngIf="loans.length > 0">
+              <div class="form-group">
+                <select class="modern-select" (change)="applyFilter('')">
+                  <option value="5">5 items per page</option>
+                  <option value="10">10 items per page</option>
+                  <option value="20">20 items per page</option>
+                  <option value="50">50 items per page</option>
+                </select>
+              </div>
+              <nav>
+                <ul class="pagination">
+                  <li class="page-item" [class.disabled]="currentPage === 1">
+                    <a class="page-link" (click)="changePage(currentPage - 1)">Previous</a>
+                  </li>
+                  <li class="page-item" *ngFor="let page of getPages()" [class.active]="page === currentPage">
+                    <a class="page-link" (click)="changePage(page)">{{page}}</a>
+                  </li>
+                  <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <a class="page-link" (click)="changePage(currentPage + 1)">Next</a>
+                  </li>
+                </ul>
+              </nav>
+              <div class="modern-pagination-info">
+                Showing {{(currentPage - 1) * itemsPerPage + 1}} to
+                {{math.min(currentPage * itemsPerPage, filteredLoans.length)}} of
+                {{filteredLoans.length}} entries
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

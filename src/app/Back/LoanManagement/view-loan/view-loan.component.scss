@@ -1,0 +1,193 @@
+/* Base background with soft gradient */
+.custom-bg {
+  background: linear-gradient(to bottom right, #eaf6ff, #ffffff);
+  min-height: 100vh;
+  padding: 3rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  animation: bgFadeIn 1s ease-in-out;
+}
+
+/* Background fade-in animation */
+@keyframes bgFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Card Styling with animations */
+.custom-card {
+  width: 1000%;
+  max-width: 700px; /* Increase width */
+  margin: auto;
+  border-radius: 1rem;
+  background-color: #ffffff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: cardFadeIn 1s ease-in-out, cardBounce 1.5s ease-in-out;
+}
+
+/* Card Fade-in Animation */
+@keyframes cardFadeIn {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Bounce effect for card */
+@keyframes cardBounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Header Styling */
+.custom-header {
+  background: linear-gradient(to right, #005380, #00b4d8);
+  padding: 1.5rem 2rem;
+  border-bottom: none;
+  color: white;
+  font-weight: 700;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  animation: headerFadeIn 0.8s ease-in-out;
+}
+
+/* Header fade-in effect */
+@keyframes headerFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Subcards Styling */
+.custom-subcard {
+  border: none;
+  border-radius: 1rem;
+  background-color: #fdfdfd;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  animation: subCardPopUp 0.5s ease-in-out;
+}
+
+/* Sub-card popup animation */
+@keyframes subCardPopUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Subheaders Styling */
+.custom-subheader {
+  background-color: #e0f7ff;
+  border-bottom: 1px solid #00b4d8;
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Button Animation */
+.custom-btn-green {
+  background-color: #00b4d8;
+  border: none;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Hover effect */
+.custom-btn-green:hover {
+  background-color: #0077b6;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Disabled Button */
+.custom-btn-green:disabled {
+  background-color: #c5e0e6;
+  cursor: not-allowed;
+}
+
+/* Badge Styling */
+.badge {
+  padding: 0.5em 0.9em;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: transform 0.2s ease;
+}
+
+/* Badge hover effect */
+.badge:hover {
+  transform: scale(1.1);
+}
+
+/* Success Badge */
+.bg-success {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+
+/* Warning Badge */
+.bg-warning {
+  background-color: #ffc107 !important;
+  color: #212529 !important;
+}
+
+/* Danger Badge */
+.bg-danger {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+/* Footer Styling */
+.custom-footer {
+  background-color: #f8f9fa;
+  padding: 1.5rem 2rem;
+  border-top: none;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Styling */
+.table td,
+.table th {
+  vertical-align: middle;
+  padding: 0.65rem 0.75rem;
+  transition: background-color 0.3s ease;
+}
+
+/* Table hover effect */
+.table tbody tr:hover {
+  background-color: #f1f1f1;
+  transform: scale(1.02);
+}
+
+/* Make tables more responsive */
+.table-responsive {
+  max-height: 500px;
+  overflow-y: auto;
+}

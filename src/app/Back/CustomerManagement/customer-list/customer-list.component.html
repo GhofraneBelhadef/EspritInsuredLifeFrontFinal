@@ -1,0 +1,59 @@
+<div class="container-fluid modern-container">
+  <div class="row">
+    <div class="col-12">
+      <div class="modern-card">
+        <div class="card-body modern-card-body">
+          <div class="d-flex justify-content-between align-items-center mb-4 modern-header">
+            <h4 class="card-title modern-title">Customers</h4>
+            <button class="btn modern-btn-primary" (click)="navigateToAddCustomer()">Add New Customer</button>
+          </div>
+
+          <div *ngIf="error" class="modern-alert-error">{{ error }}</div>
+
+          <div class="table-responsive" *ngIf="!loading">
+            <table class="table modern-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Gender</th>
+                  <th>Marital Status</th>
+                  <th>Dependents</th>
+                  <th>Income</th>
+                  <th>Credit History</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let customer of customers">
+                  <td>{{ customer.idCustomer }}</td>
+                  <td>{{ customer.gender }}</td>
+                  <td>{{ customer.maritalStatus }}</td>
+                  <td>{{ customer.dependent }}</td>
+                  <td>{{ customer.income }}</td>
+                  <td>{{ customer.creditHistory }}</td>
+                  <td class="modern-actions">
+                    <button class="btn modern-btn-secondary me-2" (click)="addLoan(customer.idCustomer)">
+                      Apply for Loan
+                    </button>
+                    <button class="btn modern-btn-accent" (click)="deleteCustomer(customer.idCustomer)">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div *ngIf="loading" class="text-center p-5 modern-loading">
+            <div class="modern-spinner"></div>
+            <span class="visually-hidden">Loading...</span>
+          </div>
+
+          <div *ngIf="!loading && customers.length === 0" class="text-center p-5 modern-empty">
+            No customers found
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
