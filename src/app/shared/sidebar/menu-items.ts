@@ -21,9 +21,17 @@ export const ROUTES: RouteInfo[] = [
     submenu: []
   },
   {
-    path: '/component/badges',
+    path: '/loanmanagement',
     title: 'Loan Management',
     icon: 'bi bi-cash-coin',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/customers',
+    title: 'Customer Management',
+    icon: 'bi bi-person-circle',
     class: '',
     extralink: false,
     submenu: []

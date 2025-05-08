@@ -6,7 +6,7 @@ import {
 } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -20,11 +20,15 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { Approutes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './shared/spinner.component';
-
+import { FrontPageComponent } from './Front/LoanManagement/front-page/front-page.component';
+import { LoanTipsChatbotComponent } from './loan-tips-chatbot/loan-tips-chatbot.component';
+//import { NgChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
     SpinnerComponent,
+    FrontPageComponent,
+    LoanTipsChatbotComponent
   ],
   imports: [
     CommonModule,
@@ -38,6 +42,7 @@ import { SpinnerComponent } from './shared/spinner.component';
     FullComponent,
     NavigationComponent,
     SidebarComponent,
+    BrowserModule,
   ],
   providers: [
     {

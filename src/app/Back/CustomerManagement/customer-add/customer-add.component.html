@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100 custom-bg">
+  <div class="container p-4 rounded shadow custom-card">
+    <h2 class="text-center mb-4 custom-title">Add New Customer</h2>
+
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #customerForm="ngForm" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="gender" class="form-label">Gender</label>
+        <select class="form-select" id="gender" name="gender" [(ngModel)]="customer.gender" required>
+          <option value="">Select Gender</option>
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="maritalStatus" class="form-label">Marital Status</label>
+        <select class="form-select" id="maritalStatus" name="maritalStatus" [(ngModel)]="customer.maritalStatus" required>
+          <option value="">Select Marital Status</option>
+          <option value="Single">Single</option>
+          <option value="Married">Married</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="dependent" class="form-label">Number of Dependents</label>
+        <input type="number" class="form-control" id="dependent" name="dependent" [(ngModel)]="customer.dependent" required min="0">
+      </div>
+
+      <div class="mb-3">
+        <label for="income" class="form-label">Income</label>
+        <input type="number" class="form-control" id="income" name="income" [(ngModel)]="customer.income" required min="0">
+      </div>
+
+      <div class="mb-3">
+        <label for="creditHistory" class="form-label">Credit History</label>
+        <input type="number" class="form-control" id="creditHistory" name="creditHistory" [(ngModel)]="customer.creditHistory" required min="0">
+      </div>
+
+      <div class="d-flex justify-content-between mt-4">
+        <button type="submit" class="btn btn-primary custom-btn-green" [disabled]="!customerForm.form.valid">Add Customer</button>
+        <button type="button" class="btn btn-secondary custom-btn-lime" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

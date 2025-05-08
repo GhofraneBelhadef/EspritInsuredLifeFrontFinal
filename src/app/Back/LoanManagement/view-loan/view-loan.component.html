@@ -1,0 +1,105 @@
+<div class="container-fluid custom-bg p-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card custom-card border-0 shadow-lg">
+          <div class="card-header d-flex justify-content-between align-items-center custom-header">
+            <h4 class="mb-0 text-white">Loan Details</h4>
+            <button class="btn btn-light btn-sm" (click)="goBack()">
+              <i class="bi bi-arrow-left"></i> Back
+            </button>
+          </div>
+  
+          <div class="card-body">
+            <div class="row">
+              <!-- Loan Info -->
+              <div class="col-md-6">
+                <div class="card mb-4 custom-subcard">
+                  <div class="card-header custom-subheader">
+                    <h5 class="mb-0">Loan Information</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-borderless">
+                        <tbody>
+                          <tr><th class="w-50">Loan ID</th><td>{{loan?.idLoan}}</td></tr>
+                          <tr><th>Amount</th><td>{{loan?.loanAmount}}</td></tr>
+                          <tr><th>Interest Rate</th><td>{{loan?.interestRate}}%</td></tr>
+                          <tr><th>Term</th><td>{{loan?.loanTerm}} months</td></tr>
+                          <tr>
+                            <th>Status</th>
+                            <td>
+                              <span class="badge"
+                                    [class.bg-success]="loan?.status === 'APPROVED'"
+                                    [class.bg-warning]="loan?.status === 'PENDING'"
+                                    [class.text-dark]="loan?.status === 'PENDING'"
+                                    [class.bg-danger]="loan?.status === 'REJECTED'">
+                                {{loan?.status}}
+                              </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Customer Info -->
+              <div class="col-md-6">
+                <div class="card mb-4 custom-subcard">
+                  <div class="card-header custom-subheader">
+                    <h5 class="mb-0">Customer Information</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-borderless">
+                        <tbody>
+                          <tr><th class="w-50">Customer ID</th><td>{{loan?.customer?.idCustomer}}</td></tr>
+                          <tr><th>Gender</th><td>{{loan?.customer?.gender}}</td></tr>
+                          <tr><th>Marital Status</th><td>{{loan?.customer?.maritalStatus}}</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div *ngIf="!loan?.customer" class="alert alert-warning">
+                      No customer information available
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Financial Info -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card mb-4 custom-subcard">
+                  <div class="card-header custom-subheader">
+                    <h5 class="mb-0">Financial Information</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-borderless">
+                        <tbody>
+                          <tr><th class="w-50">Applicant Income</th><td>{{loan?.applicantIncome}}</td></tr>
+                          <tr><th>Co-applicant Income</th><td>{{loan?.coapplicantIncome}}</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="card-footer d-flex justify-content-end custom-footer">
+            <button 
+              (click)="approve()" 
+              [disabled]="isApproving"
+              class="btn custom-btn-green">
+              {{ isApproving ? 'Processing...' : 'Approve Loan' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

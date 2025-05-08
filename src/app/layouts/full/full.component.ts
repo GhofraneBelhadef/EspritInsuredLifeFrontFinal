@@ -18,6 +18,7 @@ export class FullComponent implements OnInit {
 
   constructor(public router: Router) {}
   public isCollapsed = false;
+  public displayFront = false;
   public innerWidth: number = 0;
   public defaultSidebar: string = "";
   public showMobileMenu = false;
@@ -31,6 +32,11 @@ export class FullComponent implements OnInit {
   ngOnInit() {
     if (this.router.url === "/") {
       this.router.navigate(["/dashboard"]);
+    }
+
+    if(this.router.url == "/front")
+    {
+      this.displayFront = true;
     }
     this.defaultSidebar = this.sidebartype;
     this.handleSidebar();
